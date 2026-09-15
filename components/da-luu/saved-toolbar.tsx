@@ -1,0 +1,141 @@
+"use client";
+
+import { useState } from "react";
+import { CheckIcon, FilterIcon } from "../home/icons";
+import type { SavedItemType } from "./saved-items";
+
+export type SortBy = "recent" | "nearest";
+export type FilterType = "all" | SavedItemType;
+
+const FILTERS: { key: FilterType; label: string }[] = [
+  { key: "all", label: "Tất cả" },
+  { key: "restaurant", label: "Ẩm thực" },
+  { key: "venue", label: "Vui chơi" },
+  { key: "place", label: "Địa điểm" },
+];
+
+const SORTS: { key: SortBy; label: string }[] = [
+  { key: "recent", label: "Mới nhất" },
+  { key: "nearest", label: "Gần nhất" },
+];
+
+export function SavedToolbar({
+  disabled,
+  filterType,
+  onFilterChange,
+  sortBy,
+  onSortChange,
+  selectMode,
+  onToggleSelectMode,
+  selectedCount,
+  onBulkRemove,
+}: {
+  disabled: boolean;
+  filterType: FilterType;
+  onFilterChange: (value: FilterType) => void;
+  sortBy: SortBy;
+  onSortChange: (value: SortBy) => void;
+  selectMode: boolean;
+  onToggleSelectMode: () => void;
+  selectedCount: number;
+  onBulkRemove: () => void;
+}) {
+  const [openMenu, setOpenMenu] = useState<"filter" | "sort" | null>(null);
+
+  return (
+    <div className="relative flex items-center gap-2 px-4 pb-3">
+      <div className="relative">
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpenMenu((m) => (m === "filter" ? null : "filter"))}
+          className="flex h-8 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors disabled:opacity-40"
+          style={{
+            borderColor: openMenu === "filter" ? "#009b8c" : "#e5e5e4",
+            backgroundColor: openMenu === "filter" ? "#f3f3f3" : "#ffffff",
+            color: "#252525",
+          }}
+        >
+          <FilterIcon className="h-3.5 w-3.5" />
+          Lọc theo
+        </button>
+
+        {openMenu === "filter" && (
+          <div className="absolute top-[calc(100%+6px)] left-0 z-20 w-40 rounded-xl bg-white p-1 shadow-lg ring-1 ring-black/5">
+            {FILTERS.map((filter) => (
+              <button
+                key={filter.key}
+                type="button"
+                onClick={() => {
+                  onFilterChange(filter.key);
+                  setOpenMenu(null);
+                }}
+                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm"
+                style={{ color: filterType === filter.key ? "#009b8c" : "#252525" }}
+              >
+                {filter.label}
+                {filterType === filter.key && <CheckIcon className="h-4 w-4" />}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={onToggleSelectMode}
+        className="flex h-8 items-center px-1 text-xs font-medium disabled:opacity-40"
+        style={{ color: selectMode ? "#009b8c" : "#252525" }}
+      >
+        {selectMode ? "Xong" : "Chọn"}
+      </button>
+
+      {selectMode && selectedCount > 0 && (
+        <button
+          type="button"
+          onClick={onBulkRemove}
+          className="flex h-8 items-center rounded-full bg-[#fdecec] px-3 text-xs font-medium text-[#c0392b]"
+        >
+          Bỏ lưu ({selectedCount})
+        </button>
+      )}
+
+      <div className="relative ml-auto">
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpenMenu((m) => (m === "sort" ? null : "sort"))}
+          className="flex h-8 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors disabled:opacity-40"
+          style={{
+            borderColor: openMenu === "sort" ? "#009b8c" : "#e5e5e4",
+            backgroundColor: openMenu === "sort" ? "#f3f3f3" : "#ffffff",
+            color: "#252525",
+          }}
+        >
+          Sắp xếp theo
+        </button>
+
+        {openMenu === "sort" && (
+          <div className="absolute top-[calc(100%+6px)] right-0 z-20 w-32 rounded-xl bg-white p-1 shadow-lg ring-1 ring-black/5">
+            {SORTS.map((sort) => (
+              <button
+                key={sort.key}
+                type="button"
+                onClick={() => {
+                  onSortChange(sort.key);
+                  setOpenMenu(null);
+                }}
+                className="flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm"
+                style={{ color: sortBy === sort.key ? "#009b8c" : "#252525" }}
+              >
+                {sort.label}
+                {sortBy === sort.key && <CheckIcon className="h-4 w-4" />}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
