@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
-import { ArrowNarrowRightIcon } from "./icons";
+import { ArrowNarrowRightIcon, CheckIcon } from "./icons";
 import { LogoAnimation } from "./logo-animation";
 
 type Slide = {
@@ -43,9 +43,30 @@ const SLIDES: Slide[] = [
 const DRAG_THRESHOLD = 60;
 const WHEEL_THRESHOLD = 40;
 const WHEEL_LOCK_MS = 550;
-const SWIPE_CONFIRM_RATIO = 0.72;
+const SWIPE_CONFIRM_RATIO = 0.5;
 const CIRCLE_SIZE = 54;
 const MORPH_EASE = "cubic-bezier(0.22,1,0.36,1)";
+const BOUNCE_EASE = "cubic-bezier(0.34,1.56,0.64,1)";
+const EDGE_RESISTANCE = 0.35;
+
+type RGBA = { r: number; g: number; b: number; a: number };
+
+const DOT_INACTIVE: RGBA = { r: 255, g: 255, b: 255, a: 0.3 };
+const DOT_ACTIVE: RGBA = { r: 242, g: 215, b: 159, a: 1 };
+const PILL_START: RGBA = { r: 170, g: 110, b: 0, a: 1 };
+const PILL_END: RGBA = { r: 0, g: 155, b: 140, a: 1 };
+
+const clamp01 = (t: number) => Math.min(Math.max(t, 0), 1);
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+
+const mixRGBA = (from: RGBA, to: RGBA, t: number) => {
+  const tt = clamp01(t);
+  const r = Math.round(lerp(from.r, to.r, tt));
+  const g = Math.round(lerp(from.g, to.g, tt));
+  const b = Math.round(lerp(from.b, to.b, tt));
+  const a = lerp(from.a, to.a, tt);
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+};
 
 export function OnboardingScreen() {
   const router = useRouter();
@@ -107,7 +128,11 @@ export function OnboardingScreen() {
 
   const handlePointerMove = (event: React.PointerEvent) => {
     if (!isDragging) return;
-    setDragOffset(event.clientX - dragStartX.current);
+    let delta = event.clientX - dragStartX.current;
+    const atStart = index === 0 && delta > 0;
+    const atEnd = index === SLIDES.length - 1 && delta < 0;
+    if (atStart || atEnd) delta *= EDGE_RESISTANCE;
+    setDragOffset(delta);
   };
 
   const endDrag = () => {
@@ -142,10 +167,28 @@ export function OnboardingScreen() {
   };
 
   const dragPercent = isDragging ? (dragOffset / dragTrackWidth) * 100 : 0;
+  const continuousIndex = index - dragPercent / 100;
 
-  const getMaxPillOffset = () => {
+  const getSlotOffset = () => {
     const trackWidth = pillTrackRef.current?.offsetWidth || 0;
     return Math.max(trackWidth - CIRCLE_SIZE, 0);
+  };
+
+  // Matches getSlotOffset(): the button's left edge travels exactly as far as its
+  // final resting spot, so its right edge stays flush with the circle throughout the drag.
+  const getDragMax = () => getSlotOffset();
+
+  const getConfirmThreshold = () => Math.min(getDragMax() * SWIPE_CONFIRM_RATIO, 160);
+
+  const commitPill = () => {
+    if (isConfirmed) return;
+    setIsPillDragging(false);
+    setPillOffset(getDragMax());
+    window.setTimeout(() => {
+      setPillOffset(getSlotOffset());
+      setIsConfirmed(true);
+    }, 300);
+    window.setTimeout(finishOnboarding, 660);
   };
 
   const handlePillPointerDown = (event: React.PointerEvent) => {
@@ -158,21 +201,18 @@ export function OnboardingScreen() {
   };
 
   const handlePillPointerMove = (event: React.PointerEvent) => {
-    if (!isPillDragging) return;
+    if (!isPillDragging || isConfirmed) return;
     const delta = event.clientX - pillDragStartX.current;
     if (Math.abs(delta) > 4) pillMoved.current = true;
-    const max = getMaxPillOffset();
-    setPillOffset(Math.min(Math.max(delta, 0), max));
+    const dragMax = getDragMax();
+    setPillOffset(Math.min(Math.max(delta, 0), dragMax));
   };
 
   const handlePillPointerUp = () => {
-    if (!isPillDragging) return;
-    const max = getMaxPillOffset();
+    if (!isPillDragging || isConfirmed) return;
     setIsPillDragging(false);
-    if (max > 0 && pillOffset >= max * SWIPE_CONFIRM_RATIO) {
-      setPillOffset(max);
-      setIsConfirmed(true);
-      window.setTimeout(finishOnboarding, 220);
+    if (pillOffset >= getConfirmThreshold()) {
+      commitPill();
     } else {
       setPillOffset(0);
     }
@@ -183,21 +223,17 @@ export function OnboardingScreen() {
       pillMoved.current = false;
       return;
     }
-    if (isConfirmed) return;
-    const max = getMaxPillOffset();
-    setPillOffset(max);
-    setIsConfirmed(true);
-    window.setTimeout(finishOnboarding, 380);
+    commitPill();
   };
 
-  const maxPillOffset = Math.max(pillTrackWidth - CIRCLE_SIZE, 0);
-  const pillProgress = maxPillOffset > 0 ? Math.min(Math.max(pillOffset / maxPillOffset, 0), 1) : 0;
+  const pillDragMax = Math.max(pillTrackWidth - CIRCLE_SIZE, 0);
+  const pillProgress = pillDragMax > 0 ? Math.min(Math.max(pillOffset / pillDragMax, 0), 1) : 0;
   const pillWidth =
     pillNaturalWidth > 0
-      ? pillNaturalWidth - pillProgress * (pillNaturalWidth - CIRCLE_SIZE)
+      ? isConfirmed
+        ? CIRCLE_SIZE
+        : lerp(pillNaturalWidth, CIRCLE_SIZE, pillProgress)
       : undefined;
-  const pillTextOpacity = 1 - Math.min(pillProgress / 0.35, 1);
-  const pillIconOpacity = Math.max((pillProgress - 0.55) / 0.45, 0);
 
   return (
     <div className="relative h-svh max-h-dvh w-full overflow-hidden overscroll-none bg-black font-heading">
@@ -216,20 +252,35 @@ export function OnboardingScreen() {
         onWheel={handleWheel}
         onDragStart={(event) => event.preventDefault()}
       >
-        {SLIDES.map((slide, i) => (
-          <div key={slide.image} className="relative h-full w-full shrink-0">
-            <Image
-              src={slide.image}
-              alt={slide.alt}
-              fill
-              priority={i === 0}
-              draggable={false}
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 via-45% to-transparent" />
-          </div>
-        ))}
+        {SLIDES.map((slide, i) => {
+          const distance = Math.min(Math.abs(i - continuousIndex), 1);
+          const scale = 1 - distance * 0.08;
+          const opacity = 1 - distance * 0.35;
+          return (
+            <div
+              key={slide.image}
+              className="relative h-full w-full shrink-0"
+              style={{
+                transform: `scale(${scale})`,
+                opacity,
+                transition: isDragging
+                  ? "none"
+                  : "transform 500ms cubic-bezier(0.22,1,0.36,1), opacity 500ms cubic-bezier(0.22,1,0.36,1)",
+              }}
+            >
+              <Image
+                src={slide.image}
+                alt={slide.alt}
+                fill
+                priority={i === 0}
+                draggable={false}
+                sizes="100vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 via-45% to-transparent" />
+            </div>
+          );
+        })}
       </div>
 
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-end">
@@ -258,20 +309,27 @@ export function OnboardingScreen() {
           </div>
 
           <div className="flex gap-1.5" role="tablist" aria-label="Điều hướng giới thiệu">
-            {SLIDES.map((slide, i) => (
-              <button
-                key={slide.image}
-                type="button"
-                role="tab"
-                aria-selected={i === index}
-                aria-label={`Đi tới slide ${i + 1}`}
-                onClick={() => goTo(i)}
-                className="h-1 w-6 rounded-full transition-colors duration-300"
-                style={{
-                  backgroundColor: i === index ? "#f2d79f" : "rgba(255,255,255,0.3)",
-                }}
-              />
-            ))}
+            {SLIDES.map((slide, i) => {
+              const activeness = 1 - clamp01(Math.abs(continuousIndex - i));
+              return (
+                <button
+                  key={slide.image}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === index}
+                  aria-label={`Đi tới slide ${i + 1}`}
+                  onClick={() => goTo(i)}
+                  className="h-1 rounded-full"
+                  style={{
+                    width: `${24 + activeness * 6}px`,
+                    backgroundColor: mixRGBA(DOT_INACTIVE, DOT_ACTIVE, activeness),
+                    transition: isDragging
+                      ? "none"
+                      : "background-color 300ms, width 300ms cubic-bezier(0.22,1,0.36,1)",
+                  }}
+                />
+              );
+            })}
           </div>
 
           <div
@@ -287,8 +345,8 @@ export function OnboardingScreen() {
               style={{
                 animation: "swipe-hint 1.6s ease-in-out infinite",
                 animationPlayState: isPillDragging || pillProgress > 0 ? "paused" : "running",
-                opacity: pillProgress > 0 ? 0 : 1,
-                transition: "opacity 150ms",
+                opacity: Math.max(1 - pillProgress * 3, 0),
+                transition: isPillDragging ? "none" : "opacity 150ms",
               }}
             >
               <div className="-mr-6">
@@ -300,10 +358,7 @@ export function OnboardingScreen() {
               <ArrowNarrowRightIcon width={40} height={40} opacity={0.38} />
             </div>
 
-            <div
-              className="pointer-events-none absolute top-1 right-0 flex size-13.5 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm transition-transform duration-200"
-              style={{ transform: isConfirmed ? "scale(0.001)" : "scale(1)" }}
-            >
+            <div className="pointer-events-none absolute top-1 right-0 flex size-13.5 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
               <Image src="/onboarding/chevron.svg" alt="" width={13} height={8} />
             </div>
 
@@ -316,26 +371,34 @@ export function OnboardingScreen() {
               onPointerCancel={handlePillPointerUp}
               onClick={handlePillClick}
               aria-label="Vuốt hoặc nhấn để khám phá ngay"
-              className="absolute top-1 left-0 flex h-[54px] shrink-0 cursor-grab touch-none items-center justify-center overflow-hidden rounded-full bg-[#aa6e00] text-[15px] font-semibold whitespace-nowrap text-[#f3ebd9] active:cursor-grabbing"
+              className="absolute top-1 left-0 flex h-[54px] shrink-0 cursor-grab touch-none items-center justify-center overflow-hidden rounded-full text-[15px] font-semibold whitespace-nowrap text-[#f3ebd9] active:cursor-grabbing"
               style={{
                 width: pillWidth,
-                transform: `translateX(${pillOffset}px) scale(${isConfirmed ? 1.06 : 1})`,
+                backgroundColor: isConfirmed ? "#009b8c" : mixRGBA(PILL_START, PILL_END, pillProgress),
+                transform: `translateX(${pillOffset}px) scale(${isConfirmed ? 1.06 : 1 + pillProgress * 0.04})`,
                 transition: isPillDragging
-                  ? "none"
-                  : `transform 320ms ${MORPH_EASE}, width 320ms ${MORPH_EASE}`,
+                  ? "background-color 80ms linear"
+                  : `transform 320ms ${BOUNCE_EASE}, width 320ms ${MORPH_EASE}, background-color 200ms`,
               }}
             >
               <span
                 className="shrink-0 px-8"
-                style={{ opacity: pillTextOpacity, transition: isPillDragging ? "none" : "opacity 200ms" }}
+                style={{
+                  opacity: isConfirmed ? 0 : Math.max(1 - pillProgress * 1.6, 0),
+                  transition: isPillDragging ? "none" : "opacity 200ms",
+                }}
               >
                 Khám phá ngay
               </span>
               <span
-                className="absolute inset-0 flex items-center justify-center"
-                style={{ opacity: pillIconOpacity, transition: isPillDragging ? "none" : "opacity 200ms" }}
+                className="absolute inset-0 flex items-center justify-center text-[#f3ebd9]"
+                style={{
+                  opacity: isConfirmed ? 1 : clamp01(pillProgress * 1.6),
+                  transform: `scale(${isConfirmed ? 1 : 0.5 + clamp01(pillProgress * 1.6) * 0.5})`,
+                  transition: isPillDragging ? "none" : "opacity 200ms, transform 200ms",
+                }}
               >
-                <Image src="/onboarding/chevron.svg" alt="" width={13} height={8} className="invert" />
+                <CheckIcon width={18} height={18} />
               </span>
             </button>
           </div>

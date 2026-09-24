@@ -8,16 +8,22 @@ import { LegalTab } from "./legal-tab";
 import { SettingsTab } from "./settings-tab";
 
 const TABS = [
-  { key: "settings", label: "Cài đặt", Icon: SettingsIcon, color: "#7c6fc4" },
-  { key: "emergency", label: "Khẩn cấp", Icon: PhoneIcon, color: "#009b8c" },
-  { key: "legal", label: "Pháp lý", Icon: InfoIcon, color: "#aa6e00" },
+  { key: "settings", label: "Cài đặt", Icon: SettingsIcon },
+  { key: "emergency", label: "Khẩn cấp", Icon: PhoneIcon },
+  { key: "legal", label: "Pháp lý", Icon: InfoIcon },
 ] as const;
+
+const ACTIVE_COLOR = "#b07d00";
+const INACTIVE_COLOR = "#22304a";
 
 export function HoTroScreen() {
   const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("settings");
 
   return (
-    <div className="relative h-dvh w-full overflow-hidden bg-white">
+    <div
+      className="relative h-dvh w-full overflow-hidden"
+      style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #E3E2E0 100%)" }}
+    >
       <main
         className="h-full overflow-y-auto"
         style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
@@ -28,29 +34,30 @@ export function HoTroScreen() {
         >
           <h1 className="pb-3 text-center text-lg font-bold text-[#252525]">Hỗ trợ</h1>
 
-          <div className="flex items-center justify-center gap-3 px-4 pb-3">
-            {TABS.map(({ key, label, Icon, color }) => {
-              const isActive = tab === key;
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => setTab(key)}
-                  className="flex flex-1 flex-col items-center gap-1 rounded-xl border px-2 py-2.5 transition-colors"
-                  style={{
-                    borderColor: isActive ? color : "#e5e5e4",
-                    backgroundColor: isActive ? `${color}14` : "#ffffff",
-                  }}
-                >
-                  <span style={{ color: isActive ? color : "#58585c" }}>
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <span className="text-xs font-medium" style={{ color: isActive ? color : "#58585c" }}>
-                    {label}
-                  </span>
-                </button>
-              );
-            })}
+          <div className="px-4 pb-3">
+            <div className="flex items-center justify-center gap-2">
+              {TABS.map(({ key, label, Icon }) => {
+                const isActive = tab === key;
+                const color = isActive ? ACTIVE_COLOR : INACTIVE_COLOR;
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setTab(key)}
+                    className={`flex flex-1 p-0.5 transition-colors ${isActive ? "bg-[#9B9B9B]" : "bg-transparent"}`}
+                  >
+                    <span className="flex flex-1 flex-col items-center gap-1.5 rounded bg-white px-2 py-3">
+                      <span style={{ color }}>
+                        <Icon className="h-6 w-6" />
+                      </span>
+                      <span className="text-xs font-medium" style={{ color }}>
+                        {label}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 

@@ -14,11 +14,11 @@ export function CamNangScreen() {
   return (
     <div className="relative h-dvh w-full overflow-hidden bg-white">
       <main
-        className="h-full overflow-y-auto"
+        className="h-full overflow-y-auto bg-[#E3E2E0]"
         style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
       >
         <div
-          className="sticky top-0 z-20 bg-white shadow-[0_1px_0_rgba(0,0,0,0.06)]"
+          className="sticky top-0 z-20 bg-white"
           style={{ paddingTop: "calc(16px + env(safe-area-inset-top))" }}
         >
           <h1 className="pb-3 text-center text-lg font-bold text-[#252525]">Cẩm nang du lịch Hà Nội</h1>

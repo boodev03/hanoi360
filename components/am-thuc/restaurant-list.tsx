@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, NavigationIcon, PinIcon } from "../home/icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, PinIcon } from "../home/icons";
 import { RESTAURANTS, type Restaurant } from "./restaurants";
 
 function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
@@ -58,13 +59,10 @@ function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
             <span className="text-[11px] text-[#58585c]">{restaurant.distance}</span>
           </div>
 
-          <button
-            type="button"
-            aria-label="Chỉ đường"
-            className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f3ebd9] text-[#727273] transition-colors active:bg-[#eaddc0]"
-          >
-            <NavigationIcon className="h-4 w-4" />
-          </button>
+          <DirectionsButton
+            query={`${restaurant.name}${restaurant.address ? `, ${restaurant.address}` : ""}, Hà Nội`}
+            className="relative z-10 shrink-0"
+          />
         </div>
       </div>
     </div>

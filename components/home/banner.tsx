@@ -1,82 +1,112 @@
 "use client";
 
-import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 
-const SLIDES = [
-  { title: "Triển lãm nghệ thuật", subtitle: "Bảo tàng Mỹ thuật Việt Nam" },
-  { title: "Từ Tính Tứ Linh", subtitle: "Văn Miếu - Quốc Tử Giám" },
-  { title: "Workshop Hoạ - Gốm", subtitle: "An Café Thuận An" },
-  { title: "Lễ hội ẩm thực", subtitle: "Phố ẩm thực Tống Duy Tân" },
-  { title: "Chợ đêm cuối tuần", subtitle: "Chợ Đồng Xuân" },
+const IMAGES = [
+  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_1-BM4ez75K.png",
+  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_3-BwW67wNQ.png",
+  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_5-bDxzQMdg.png",
+  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_2-iFKR3BgZ.png",
+  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_4-BMuVoPz4.png",
 ];
 
+const EASE = "cubic-bezier(0.45, 0, 0.15, 1)";
+const TRANSITION = `transform 320ms ${EASE}, opacity 320ms ${EASE}`;
+
 export function Banner() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "center",
-    containScroll: false,
-  });
-  const [selected, setSelected] = useState(0);
+  const [active, setActive] = useState(2);
+  const dragStartX = useRef<number | null>(null);
+  const count = IMAGES.length;
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelected(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on("init", onSelect);
-    emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
-    return () => {
-      emblaApi.off("init", onSelect);
-      emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
-    };
-  }, [emblaApi, onSelect]);
+  const go = (dir: number) => setActive((prev) => (prev + dir + count) % count);
 
   return (
-    <div className="pt-2">
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex">
-          {SLIDES.map((slide, i) => (
-            <div key={slide.title} className="min-w-0 flex-[0_0_74%] px-1.5">
-              <div
-                className="relative flex aspect-[4/5] w-full flex-col justify-end overflow-hidden rounded-2xl transition-all duration-300 ease-out"
-                style={{
-                  transform: i === selected ? "scale(1)" : "scale(0.86)",
-                  opacity: i === selected ? 1 : 0.75,
-                }}
-              >
-                <Image
-                  src="/home/hero-1.png"
-                  alt={slide.title}
-                  fill
-                  className="object-cover"
-                  sizes="74vw"
-                  priority={i === 0}
-                />
-                <div className="relative z-10 bg-gradient-to-t from-black/60 to-transparent p-4 pt-10">
-                  <p className="text-lg leading-snug font-bold text-[#f3ebd9]">{slide.title}</p>
-                  <p className="text-sm text-[#f3ebd9]/85">{slide.subtitle}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div
+      className="relative h-[406px] w-full overflow-hidden"
+      style={{ touchAction: "pan-y" }}
+      onPointerDown={(e) => {
+        dragStartX.current = e.clientX;
+      }}
+      onPointerUp={(e) => {
+        if (dragStartX.current === null) return;
+        const dx = e.clientX - dragStartX.current;
+        if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+        dragStartX.current = null;
+      }}
+      onPointerCancel={() => {
+        dragStartX.current = null;
+      }}
+    >
+      <div
+        className="pointer-events-none absolute top-0 left-0 h-[85px] w-full"
+        style={{ background: "linear-gradient(rgb(170, 110, 1) 0%, rgb(141, 89, 0) 100%)" }}
+      />
 
-      <div className="mt-3 flex items-center justify-center gap-1">
-        {SLIDES.map((slide, i) => (
+      {IMAGES.map((src, i) => {
+        let offset = (((i - active) % count) + count) % count;
+        if (offset > count / 2) offset -= count;
+        const isActive = offset === 0;
+        const distance = Math.abs(offset);
+
+        return (
+          <div
+            key={src}
+            className="absolute"
+            style={{
+              width: 300,
+              height: 360,
+              top: 23,
+              left: "50%",
+              marginLeft: -150,
+              transform: `translateX(${offset * 280}px) scale(${isActive ? 1 : 0.82})`,
+              opacity: distance >= 2 ? 0 : 1,
+              zIndex: 100 - distance * 10,
+              transition: TRANSITION,
+              pointerEvents: isActive ? "auto" : "none",
+            }}
+          >
+            <div
+              className="pointer-events-none absolute rounded-[10px]"
+              style={{
+                inset: -4,
+                backgroundColor: "rgba(255, 255, 255, 0.5)",
+                backdropFilter: "blur(6px)",
+                WebkitBackdropFilter: "blur(6px)",
+                opacity: isActive ? 1 : 0,
+                transition: TRANSITION,
+              }}
+            />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              alt=""
+              draggable={false}
+              src={src}
+              className="pointer-events-none absolute inset-0 h-full w-full rounded-[6px] object-cover shadow-[0px_6px_18px_rgba(0,0,0,0.28)] select-none"
+            />
+            <div
+              className="pointer-events-none absolute inset-0 rounded-[6px]"
+              style={{
+                backgroundColor: `rgba(255, 255, 255, ${isActive ? 0 : 0.2})`,
+                transition: TRANSITION,
+              }}
+            />
+          </div>
+        );
+      })}
+
+      <div className="absolute bottom-[2px] left-1/2 z-[200] flex -translate-x-1/2 items-center gap-1">
+        {IMAGES.map((src, i) => (
           <button
-            key={slide.title}
+            key={src}
             type="button"
             aria-label={`Đi tới banner ${i + 1}`}
-            onClick={() => emblaApi?.scrollTo(i)}
-            className="h-1 w-3 rounded-full transition-colors duration-300"
-            style={{ backgroundColor: i === selected ? "#aa6e00" : "#d4d4d3" }}
+            onClick={() => setActive(i)}
+            className="h-1 rounded-[9px]"
+            style={{
+              width: i === active ? 20 : 12,
+              backgroundColor: i === active ? "#aa6e00" : "#d4d4d3",
+              transition: `width 320ms ${EASE}, background-color 320ms ${EASE}`,
+            }}
           />
         ))}
       </div>

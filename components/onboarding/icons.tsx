@@ -1,3 +1,30 @@
+type CheckIconProps = {
+  width?: number;
+  height?: number;
+  className?: string;
+};
+
+export function CheckIcon({ width = 16, height = 16, className }: CheckIconProps) {
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M5 12.5L10 17.5L19 7.5"
+        stroke="currentColor"
+        strokeWidth={2.5}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 type ArrowNarrowRightIconProps = {
   width?: number;
   height?: number;

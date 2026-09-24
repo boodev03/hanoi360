@@ -36,9 +36,10 @@ export function CoSoYTeScreen() {
         className="h-full overflow-y-auto"
         style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
       >
-        <Hero />
-        <FilterBar />
-        <CategoryFilter active={active} onToggle={toggle} />
+        <Hero>
+          <FilterBar />
+          <CategoryFilter active={active} onToggle={toggle} />
+        </Hero>
         <FacilityList facilities={facilities} />
       </main>
 

@@ -35,8 +35,9 @@ export function LangNgheScreen() {
         className="h-full overflow-y-auto"
         style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
       >
-        <Hero />
-        <CategoryFilter active={active} onToggle={toggle} />
+        <Hero>
+          <CategoryFilter active={active} onToggle={toggle} />
+        </Hero>
         <VillageList villages={villages} />
       </main>
 

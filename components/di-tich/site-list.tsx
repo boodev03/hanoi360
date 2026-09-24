@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, NavigationIcon, PinIcon } from "../home/icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, PinIcon } from "../home/icons";
 import type { Site } from "./sites";
 
 function SiteCard({ site }: { site: Site }) {
@@ -11,8 +12,8 @@ function SiteCard({ site }: { site: Site }) {
   const toggleSaved = useToggleSaved();
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
-      <div className="relative h-[160px] w-full bg-[#f3f3f3]">
+    <div className="relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+      <div className="relative h-[160px] w-full overflow-hidden rounded-t-lg rounded-b-[20px] bg-[#f3f3f3]">
         <Image
           src={site.photo}
           alt={site.name}
@@ -21,15 +22,12 @@ function SiteCard({ site }: { site: Site }) {
           sizes="(min-width: 640px) 560px, 100vw"
         />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/20 to-transparent" />
-
-        <button
-          type="button"
-          aria-label="Chỉ đường"
-          className="absolute right-3 bottom-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#fbf1db] text-[#aa6e00] shadow-md transition-transform duration-150 select-none active:scale-90"
-        >
-          <NavigationIcon className="h-4.5 w-4.5" />
-        </button>
       </div>
+
+      <DirectionsButton
+        query={`${site.name}, ${site.subtitle}, Hà Nội`}
+        className="absolute top-[160px] right-6 z-10 -translate-y-1/2"
+      />
 
       <div className="px-3.5 pt-3 pb-3">
         <p className="truncate text-[16px] leading-tight font-bold text-[#252525]">{site.name}</p>

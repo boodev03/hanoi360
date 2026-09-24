@@ -16,8 +16,15 @@ export function HomeScreen() {
           paddingBottom: "calc(83px + env(safe-area-inset-bottom))",
         }}
       >
-        <Banner />
-        <CategoryGrid />
+        <div
+          style={{
+            background: "linear-gradient(rgb(250, 248, 245) 0%, rgb(239, 236, 231) 100%)",
+            touchAction: "pan-y",
+          }}
+        >
+          <Banner />
+          <CategoryGrid />
+        </div>
         <NearYou />
       </main>
 

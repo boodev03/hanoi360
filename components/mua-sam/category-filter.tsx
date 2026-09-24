@@ -12,7 +12,7 @@ export function CategoryFilter({
   onToggle: (category: ShopCategory) => void;
 }) {
   return (
-    <FilterSection topClassName="top-48" gapClassName="gap-4">
+    <FilterSection gapClassName="gap-4">
       {CATEGORIES.map((category) => {
         const isActive = active.has(category.key);
         return (

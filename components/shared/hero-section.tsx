@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Hero } from "./hero";
 import { SearchBar } from "./search-bar";
 
@@ -7,13 +8,17 @@ type HeroSectionProps = {
   gradientTo: string;
   illustration?: string;
   searchPlaceholder: string;
+  children?: ReactNode;
 };
 
-export function HeroSection({ title, gradientFrom, gradientTo, illustration, searchPlaceholder }: HeroSectionProps) {
+export function HeroSection({ title, gradientFrom, gradientTo, illustration, searchPlaceholder, children }: HeroSectionProps) {
   return (
     <>
       <Hero title={title} gradientFrom={gradientFrom} gradientTo={gradientTo} illustration={illustration} />
-      <SearchBar placeholder={searchPlaceholder} />
+      <div className="sticky top-[55px] z-30 -mt-6 bg-white">
+        <SearchBar placeholder={searchPlaceholder} />
+        {children}
+      </div>
     </>
   );
 }

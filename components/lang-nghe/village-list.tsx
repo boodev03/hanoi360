@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, NavigationIcon, PinIcon } from "../home/icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, PinIcon } from "../home/icons";
 import type { Village } from "./villages";
 
 function VillageCard({ village }: { village: Village }) {
@@ -11,8 +12,8 @@ function VillageCard({ village }: { village: Village }) {
   const toggleSaved = useToggleSaved();
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
-      <div className="relative h-[178px] w-full overflow-hidden rounded-t-2xl bg-[#c0c0c0]">
+    <div className="relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+      <div className="relative h-[178px] w-full overflow-hidden rounded-t-lg rounded-b-[20px] bg-[#c0c0c0]">
         <Image
           src={village.photo}
           alt={village.name}
@@ -20,15 +21,12 @@ function VillageCard({ village }: { village: Village }) {
           className="object-cover"
           sizes="(min-width: 640px) 560px, 100vw"
         />
-
-        <button
-          type="button"
-          aria-label="Chỉ đường"
-          className="absolute right-3 -bottom-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#f3ebd9] text-[#727273] shadow-md transition-transform duration-150 select-none active:scale-90"
-        >
-          <NavigationIcon className="h-4 w-4" />
-        </button>
       </div>
+
+      <DirectionsButton
+        query={`${village.name}, ${village.address}, Hà Nội`}
+        className="absolute top-[178px] right-6 z-10 -translate-y-1/2"
+      />
 
       <div className="p-3">
         <div className="flex items-center gap-2">

@@ -18,7 +18,7 @@ export function CategoryGrid() {
   const router = useRouter();
 
   return (
-    <div className="relative grid grid-cols-4 gap-x-2 gap-y-4 px-3">
+    <div className="relative grid grid-cols-4 gap-x-2 gap-y-4 px-3 pt-4 pb-2">
       <div className="pointer-events-none absolute inset-x-3 top-0 bottom-0">
         <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#d6d6d6]" />
         <span className="absolute top-0 bottom-0 left-1/4 w-px -translate-x-1/2 bg-[#d6d6d6]" />

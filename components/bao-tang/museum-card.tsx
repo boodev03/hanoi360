@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, PinIcon, ShareIcon } from "../home/icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, PinIcon } from "../home/icons";
 
 export type Museum = {
   id: number;
@@ -16,8 +17,8 @@ function MuseumCard({ museum }: { museum: Museum }) {
   const toggleSaved = useToggleSaved();
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
-      <div className="relative h-44 w-full bg-[#c0c0c0]">
+    <div className="relative overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
+      <div className="relative h-44 w-full overflow-hidden rounded-t-lg rounded-b-[20px] bg-[#c0c0c0]">
         <Image
           src={museum.image}
           alt={museum.title}
@@ -25,15 +26,12 @@ function MuseumCard({ museum }: { museum: Museum }) {
           className="object-cover"
           sizes="(min-width: 640px) 560px, 100vw"
         />
-
-        <button
-          type="button"
-          aria-label="Chia sẻ"
-          className="absolute top-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-white/80 text-[#252525] backdrop-blur-sm"
-        >
-          <ShareIcon className="h-4.5 w-4.5" />
-        </button>
       </div>
+
+      <DirectionsButton
+        query={`${museum.title}, ${museum.address}, Hà Nội`}
+        className="absolute top-44 right-6 z-10 -translate-y-1/2"
+      />
 
       <div className="p-3">
         <h3 className="text-base font-bold text-[#252525]">{museum.title}</h3>

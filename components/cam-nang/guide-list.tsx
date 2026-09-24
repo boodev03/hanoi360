@@ -3,7 +3,7 @@ import type { Guide } from "./guides";
 
 function GuideCard({ guide }: { guide: Guide }) {
   return (
-    <div className="relative h-50.5 overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-150 active:scale-[0.99]">
+    <div className="relative h-50.5 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-150 active:scale-[0.99]">
       <div className="w-full h-[calc(100%-32px)] bg-[#c0c0c0] relative">
         <Image
           src={guide.photo}

@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, NavigationIcon, PinIcon } from "../home/icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, PinIcon } from "../home/icons";
 import type { Facility } from "./facilities";
 
 function FacilityCard({ facility }: { facility: Facility }) {
@@ -38,13 +39,10 @@ function FacilityCard({ facility }: { facility: Facility }) {
         </div>
       </div>
 
-      <button
-        type="button"
-        aria-label="Chỉ đường"
-        className="absolute top-1/2 right-3 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-[#f3ebd9] text-[#727273] shadow-md transition-transform duration-150 select-none active:scale-90"
-      >
-        <NavigationIcon className="h-4 w-4" />
-      </button>
+      <DirectionsButton
+        query={`${facility.name}, ${facility.address}, Hà Nội`}
+        className="absolute top-1/2 right-3 z-10 -translate-y-1/2"
+      />
     </div>
   );
 }

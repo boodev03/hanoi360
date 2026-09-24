@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSavedKeys, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, CheckIcon, NavigationIcon, PinIcon, SavedIcon } from "../home/icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, CheckIcon, PinIcon, SavedIcon } from "../home/icons";
 import { parseDistanceMeters, resolveSavedItem, type SavedDisplayItem } from "./saved-items";
 import type { FilterType, SortBy } from "./saved-toolbar";
 
@@ -27,7 +28,7 @@ function SavedCard({
       )}
 
       <div className="relative">
-        <div className="relative h-[150px] w-full overflow-hidden rounded-t-2xl bg-[#f3f3f3]">
+        <div className="relative h-[150px] w-full overflow-hidden rounded-t-lg rounded-b-[20px] bg-[#f3f3f3]">
           {item.photo ? (
             <Image src={item.photo} alt={item.name} fill className="object-cover" sizes="100vw" />
           ) : (
@@ -46,13 +47,10 @@ function SavedCard({
             {selected && <CheckIcon className="h-3.5 w-3.5 text-white" />}
           </button>
         ) : (
-          <button
-            type="button"
-            aria-label="Chỉ đường"
-            className="absolute right-3 -bottom-3 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-[#fbf1db] text-[#aa6e00] shadow-md"
-          >
-            <NavigationIcon className="h-4 w-4" />
-          </button>
+          <DirectionsButton
+            query={`${item.name}, ${item.subtitle}, Hà Nội`}
+            className="absolute right-6 bottom-0 z-10 translate-y-1/2"
+          />
         )}
       </div>
 

@@ -28,7 +28,7 @@ export function FilterBar() {
 
   return (
     <>
-      <FilterSection topClassName="top-32">
+      <FilterSection>
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
