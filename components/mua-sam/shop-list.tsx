@@ -23,7 +23,7 @@ function ShopCard({ shop }: { shop: Shop }) {
           onClick={() => toggleSaved(key)}
           aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
           aria-pressed={saved}
-          className="flex h-11 w-11 items-center justify-center text-[#58585c] transition-transform duration-150 select-none active:scale-90"
+          className="flex h-11 w-11 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
         >
           <BookmarkIcon className="h-4.5 w-4.5" filled={saved} />
         </button>

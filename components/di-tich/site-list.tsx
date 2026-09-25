@@ -29,12 +29,12 @@ function SiteCard({ site }: { site: Site }) {
         className="absolute top-[160px] right-6 z-10 -translate-y-1/2"
       />
 
-      <div className="px-3.5 pt-3 pb-3">
+      <div className="px-3.5 pt-3 pb-1">
         <p className="truncate text-[16px] leading-tight font-bold text-[#252525]">{site.name}</p>
         <p className="mt-1 truncate text-[13px] text-[#58585c]">{site.subtitle}</p>
 
         <div className="mt-2.5 flex items-center justify-between">
-          <div className="inline-flex items-center gap-1 rounded-full bg-[#f3f3f3] px-2 py-1">
+          <div className="inline-flex items-center gap-1">
             <PinIcon className="h-3.5 w-3.5 text-[#58585c]" />
             <span className="text-[12px] text-[#58585c]">{site.distance}</span>
           </div>
@@ -44,7 +44,7 @@ function SiteCard({ site }: { site: Site }) {
             onClick={() => toggleSaved(key)}
             aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
             aria-pressed={saved}
-            className="-mr-1.5 flex h-11 w-11 items-center justify-center text-[#aa6e00] transition-transform duration-150 select-none active:scale-90"
+            className="-mr-1.5 flex h-11 w-11 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
           >
             <BookmarkIcon className="h-4.5 w-4.5" filled={saved} />
           </button>

@@ -33,12 +33,12 @@ function MuseumCard({ museum }: { museum: Museum }) {
         className="absolute top-44 right-6 z-10 -translate-y-1/2"
       />
 
-      <div className="p-3">
+      <div className="px-3 pt-3 pb-1">
         <h3 className="text-base font-bold text-[#252525]">{museum.title}</h3>
         <p className="mt-1 text-sm text-[#58585c]">{museum.address}</p>
 
         <div className="mt-2 flex items-center justify-between">
-          <div className="inline-flex items-center gap-1 rounded-full bg-[#f3f3f3] px-2 py-1">
+          <div className="inline-flex items-center gap-1">
             <PinIcon className="h-3.5 w-3.5 text-[#58585c]" />
             <span className="text-xs text-[#58585c]">{museum.distance}</span>
           </div>
@@ -48,7 +48,7 @@ function MuseumCard({ museum }: { museum: Museum }) {
             onClick={() => toggleSaved(key)}
             aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
             aria-pressed={saved}
-            className="-mr-1.5 flex h-11 w-11 items-center justify-center text-[#aa6e00] transition-transform duration-150 select-none active:scale-90"
+            className="-mr-1.5 flex h-11 w-11 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
           >
             <BookmarkIcon className="h-4.5 w-4.5" filled={saved} />
           </button>

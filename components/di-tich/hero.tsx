@@ -8,7 +8,7 @@ export function Hero({ children }: { children?: ReactNode }) {
       gradientFrom="#f2d79f"
       gradientTo="#aa6e00"
       illustration="/di-tich-lich-su/hero-illustration.svg"
-      searchPlaceholder="Tìm di tích, danh lam thắng cảnh..."
+      searchPlaceholder="Tìm địa điểm bạn muốn đến"
     >
       {children}
     </HeroSection>

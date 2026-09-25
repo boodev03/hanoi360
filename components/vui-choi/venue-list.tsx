@@ -28,7 +28,7 @@ function VenueCard({ venue }: { venue: Venue }) {
         className="absolute top-[178px] right-6 z-10 -translate-y-1/2"
       />
 
-      <div className="p-3">
+      <div className="px-3 pt-3 pb-1">
         <div className="flex items-center gap-2">
           <div className="min-w-0 flex-1">
             <p className="text-base font-bold text-[#252525]">{venue.name}</p>
@@ -40,7 +40,7 @@ function VenueCard({ venue }: { venue: Venue }) {
             onClick={() => toggleSaved(key)}
             aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
             aria-pressed={saved}
-            className="-mr-1.5 flex h-10 w-10 shrink-0 items-center justify-center text-[#58585c] transition-transform duration-150 select-none active:scale-90"
+            className="-mr-1.5 flex h-10 w-10 shrink-0 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
           >
             <BookmarkIcon className="h-5 w-5" filled={saved} />
           </button>

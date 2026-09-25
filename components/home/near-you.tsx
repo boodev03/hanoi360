@@ -22,12 +22,12 @@ function PlaceCard({ place }: { place: Place }) {
         </button>
       </div>
 
-      <div className="px-3 pt-3 pb-3">
+      <div className="px-3 pt-3 pb-1">
         <p className="truncate text-base font-semibold text-[#363636]">{place.title}</p>
         <p className="mt-1 truncate text-sm text-[#363636]/80">{place.address}</p>
 
         <div className="mt-3 flex items-center justify-between">
-          <div className="inline-flex items-center gap-1 rounded-full bg-[#f3f3f3] px-2 py-1">
+          <div className="inline-flex items-center gap-1">
             <PinIcon className="h-3.5 w-3.5 text-[#58585c]" />
             <span className="text-[11px] text-[#58585c]">{place.distance}</span>
           </div>
@@ -36,7 +36,7 @@ function PlaceCard({ place }: { place: Place }) {
             type="button"
             onClick={() => toggleSaved(key)}
             aria-label="Lưu địa điểm"
-            className="flex h-8 w-8 items-center justify-center text-[#58585c]"
+            className="flex h-8 w-8 items-center justify-center text-[#27314D]"
           >
             <BookmarkIcon className="h-5 w-5" filled={saved} />
           </button>
@@ -51,7 +51,7 @@ export function NearYou() {
 
   if (status !== "granted") {
     return (
-      <div className="mx-6 flex flex-col items-center gap-3 rounded-xl bg-[#f3f3f3] px-4 py-6 text-center">
+      <div className="mx-6 flex flex-col items-center gap-3 rounded-xl px-4 py-6 text-center">
         <LocationOffIcon className="h-7 w-7 text-[#9e6c1a]" />
         {status === "denied" ? (
           <p className="text-sm text-[#58585c]">

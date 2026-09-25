@@ -14,7 +14,7 @@ function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
   const isDark = restaurant.logoBg.toLowerCase() !== "#eef1ee" && !restaurant.logoBg.startsWith("#f") && !restaurant.logoBg.startsWith("#e");
 
   return (
-    <div className="relative flex gap-3 rounded-2xl bg-white p-2.5 shadow-sm ring-1 ring-black/5">
+    <div className="relative flex gap-3 rounded-2xl bg-white p-2.5 pb-1 shadow-sm ring-1 ring-black/5">
       <Link href={`/am-thuc/${restaurant.id}`} aria-label={restaurant.name} className="absolute inset-0 z-[1] rounded-2xl" />
 
       <div
@@ -45,7 +45,7 @@ function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
             type="button"
             onClick={() => toggleSaved(key)}
             aria-label="Lưu địa điểm"
-            className="relative z-10 -mt-1 -mr-1 flex h-8 w-8 shrink-0 items-center justify-center text-[#58585c]"
+            className="relative z-10 -mt-1 -mr-1 flex h-8 w-8 shrink-0 items-center justify-center text-[#27314D]"
           >
             <BookmarkIcon className="h-4 w-4" filled={saved} />
           </button>
@@ -54,7 +54,7 @@ function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
         <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-[#58585c]">{restaurant.description}</p>
 
         <div className="mt-auto flex items-center justify-between pt-2">
-          <div className="inline-flex items-center gap-1 rounded-full bg-[#f3f3f3] px-2 py-1">
+          <div className="inline-flex items-center gap-1">
             <PinIcon className="h-3.5 w-3.5 text-[#58585c]" />
             <span className="text-[11px] text-[#58585c]">{restaurant.distance}</span>
           </div>

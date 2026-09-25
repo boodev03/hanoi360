@@ -73,7 +73,7 @@ export function ShopDetailScreen({ restaurant }: { restaurant: Restaurant }) {
             type="button"
             onClick={() => toggleSaved(key)}
             aria-label="Lưu địa điểm"
-            className="mt-3 h-9 w-9 text-[#58585c]"
+            className="mt-3 h-9 w-9 text-[#27314D]"
           >
             <BookmarkIcon className="h-5 w-5" filled={saved} />
           </button>
