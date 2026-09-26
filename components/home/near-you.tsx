@@ -11,8 +11,9 @@ function PlaceCard({ place }: { place: Place }) {
   const toggleSaved = useToggleSaved();
 
   return (
-    <div className="w-[287px] shrink-0 snap-center rounded-xl bg-white shadow-sm ring-1 ring-black/5">
-      <div className="relative h-[138px] w-full overflow-hidden rounded-t-xl bg-gradient-to-br from-[#d6d6d6] to-[#ae996f]">
+    <div className="w-[287px] shrink-0 snap-center rounded-xl">
+      <div className="relative h-[138px] w-full overflow-hidden rounded-t-[5px] rounded-b-[20px]">
+        <img src="/home/decor.png" alt={place.title} className="h-full w-full object-cover" />
         <button
           type="button"
           aria-label="Chỉ đường"
@@ -22,7 +23,7 @@ function PlaceCard({ place }: { place: Place }) {
         </button>
       </div>
 
-      <div className="px-3 pt-3 pb-1">
+      <div className="rounded-t-[20px] rounded-b-[5px] bg-white px-3 pt-3 pb-1">
         <p className="truncate text-base font-semibold text-[#363636]">{place.title}</p>
         <p className="mt-1 truncate text-sm text-[#363636]/80">{place.address}</p>
 
@@ -76,9 +77,9 @@ export function NearYou() {
   }
 
   return (
-    <div className="pb-6">
-      <h2 className="px-6 text-base font-semibold text-[#58585c]">Gần bạn nhất</h2>
-      <div className="mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="mt-7 pb-6">
+      <h2 className="px-6 text-center text-base font-semibold leading-none text-[#27314D]">Gần bạn nhất</h2>
+      <div className="mt-3 flex snap-x snap-mandatory gap-3 overflow-x-auto px-3 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {PLACES.map((place) => (
           <PlaceCard key={place.id} place={place} />
         ))}

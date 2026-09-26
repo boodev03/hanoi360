@@ -18,7 +18,7 @@ export function CategoryGrid() {
   const router = useRouter();
 
   return (
-    <div className="relative grid grid-cols-4 gap-x-2 gap-y-4 px-3 pt-4 pb-2">
+    <div className="relative grid grid-cols-4 gap-x-2 gap-y-4 px-3 pt-4 pb-3 mt-[28px]">
       <div className="pointer-events-none absolute inset-x-3 top-0 bottom-0">
         <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-[#d6d6d6]" />
         <span className="absolute top-0 bottom-0 left-1/4 w-px -translate-x-1/2 bg-[#d6d6d6]" />
@@ -40,7 +40,7 @@ export function CategoryGrid() {
           <div className="relative flex h-[72px] w-[72px] items-center justify-center overflow-hidden rounded-lg">
             <Image src={category.icon} alt="" width={72} height={72} className="h-full w-full object-contain" />
           </div>
-          <span className="text-center text-xs leading-tight text-[#252525]">{category.label}</span>
+          <span className="text-center text-xs leading-tight text-[#141E3F]">{category.label}</span>
         </button>
       ))}
     </div>

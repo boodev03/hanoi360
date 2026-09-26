@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const IMAGES = [
   "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_1-BM4ez75K.png",
@@ -20,9 +20,14 @@ export function Banner() {
 
   const go = (dir: number) => setActive((prev) => (prev + dir + count) % count);
 
+  useEffect(() => {
+    const id = setInterval(() => setActive((prev) => (prev + 1) % count), 5000);
+    return () => clearInterval(id);
+  }, [active, count]);
+
   return (
     <div
-      className="relative h-[406px] w-full overflow-hidden"
+      className="relative isolate h-[406px] w-full overflow-hidden"
       style={{ touchAction: "pan-y" }}
       onPointerDown={(e) => {
         dragStartX.current = e.clientX;
@@ -53,11 +58,11 @@ export function Banner() {
             key={src}
             className="absolute"
             style={{
-              width: 300,
-              height: 360,
+              width: 295,
+              height: 370,
               top: 23,
               left: "50%",
-              marginLeft: -150,
+              marginLeft: -147.5,
               transform: `translateX(${offset * 280}px) scale(${isActive ? 1 : 0.82})`,
               opacity: distance >= 2 ? 0 : 1,
               zIndex: 100 - distance * 10,
@@ -66,7 +71,7 @@ export function Banner() {
             }}
           >
             <div
-              className="pointer-events-none absolute rounded-[10px]"
+              className="pointer-events-none absolute"
               style={{
                 inset: -4,
                 backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -81,10 +86,10 @@ export function Banner() {
               alt=""
               draggable={false}
               src={src}
-              className="pointer-events-none absolute inset-0 h-full w-full rounded-[6px] object-cover shadow-[0px_6px_18px_rgba(0,0,0,0.28)] select-none"
+              className="pointer-events-none absolute inset-0 h-full w-full rounded object-cover shadow-xs select-none"
             />
             <div
-              className="pointer-events-none absolute inset-0 rounded-[6px]"
+              className="pointer-events-none absolute inset-0 rounded"
               style={{
                 backgroundColor: `rgba(255, 255, 255, ${isActive ? 0 : 0.2})`,
                 transition: TRANSITION,
