@@ -9,7 +9,7 @@ type SearchBarProps = {
 
 export function SearchBar({ placeholder, onClick, stuck = false }: SearchBarProps) {
   return (
-    <div className="bg-white px-4 py-3">
+    <div className="bg-white px-4 pt-3 pb-0 shadow-xs">
       <button
         type="button"
         onClick={onClick}

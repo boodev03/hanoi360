@@ -1,7 +1,8 @@
 "use client";
 
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BookmarkIcon, LocationOffIcon, NavigationIcon, PinIcon } from "./icons";
+import { DirectionsButton } from "../shared/directions-button";
+import { BookmarkIcon, LocationOffIcon, PinIcon } from "./icons";
 import { PLACES, type Place } from "./places";
 import { useGeoPermission } from "./use-geo-permission";
 
@@ -11,17 +12,14 @@ function PlaceCard({ place }: { place: Place }) {
   const toggleSaved = useToggleSaved();
 
   return (
-    <div className="w-[287px] shrink-0 snap-center rounded-xl">
+    <div className="relative w-[287px] shrink-0 snap-center rounded-xl">
       <div className="relative h-[138px] w-full overflow-hidden rounded-t-[5px] rounded-b-[20px]">
         <img src="/home/decor.png" alt={place.title} className="h-full w-full object-cover" />
-        <button
-          type="button"
-          aria-label="Chỉ đường"
-          className="absolute right-3 bottom-3 flex h-10 w-10 items-center justify-center rounded-full bg-[#fbf1db] text-[#aa6e00] shadow-md"
-        >
-          <NavigationIcon className="h-5 w-5" />
-        </button>
       </div>
+      <DirectionsButton
+        query={`${place.title}, Hà Nội`}
+        className="absolute top-34.5 right-3 z-10 -translate-y-1/2 shadow-[0px_4px_4px_0px_#00000040]"
+      />
 
       <div className="rounded-t-[20px] rounded-b-[5px] bg-white px-3 pt-3 pb-1">
         <p className="truncate text-base font-semibold text-[#363636]">{place.title}</p>

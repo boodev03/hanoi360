@@ -19,7 +19,7 @@ export function CategoryTabs({
   const activeIndex = TABS.findIndex((tab) => tab.key === activeCategory);
 
   return (
-    <div className="px-4 pt-4 pb-8">
+    <div className="px-4 pt-4 pb-2">
       <div className="relative flex gap-2">
         {TABS.map(({ key, label, Icon }) => {
           const isActive = key === activeCategory;
@@ -30,9 +30,11 @@ export function CategoryTabs({
               onClick={() => onCategoryChange(key)}
               className="flex flex-1 flex-col items-center gap-1"
             >
-              <div className={`shrink-0 p-0.5 ${isActive ? "bg-[#9B9B9B] animate-[tab-pop_0.3s_ease-in-out]" : "bg-transparent"}`}>
-                <div className="h-18 w-18 rounded-lg bg-white">
-                  <Icon className="h-full w-full" />
+              <div className="grid size-18 shrink-0 place-items-center">
+                <div className={`grid place-items-center ${isActive ? "size-18 bg-[#9B9B9B] p-0.5 animate-[tab-pop_0.3s_ease-in-out]" : "size-17 bg-transparent"}`}>
+                  <div className="size-full rounded-lg bg-white">
+                    <Icon className="h-full w-full" />
+                  </div>
                 </div>
               </div>
               <span
@@ -46,7 +48,7 @@ export function CategoryTabs({
         })}
         <span
           aria-hidden
-          className="absolute -bottom-8 h-0 w-0 -translate-x-1/2 border-x-12 border-b-12 border-x-transparent border-b-[#E3E2E0] transition-[left] duration-300 ease-in-out"
+          className="absolute top-[calc(100%+1px)] h-0 w-0 -translate-x-1/2 border-x-[7.5px] border-b-[7px] border-x-transparent border-b-[#E3E2E0] transition-[left] duration-300 ease-in-out"
           style={{
             left: `calc(${(2 * activeIndex + 1)} * (100% - 24px) / 8 + ${8 * activeIndex}px)`,
           }}
