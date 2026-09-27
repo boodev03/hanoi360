@@ -1,21 +1,34 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const IMAGES = [
-  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_1-BM4ez75K.png",
-  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_3-BwW67wNQ.png",
-  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_5-bDxzQMdg.png",
-  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_2-iFKR3BgZ.png",
-  "https://0d20cf38-1f43-4f30-a384-36eae02c2bc7.frame.claudeusercontent.com/_f/1789550986-d26b/assets/banner_4-BMuVoPz4.png",
+  "/home/banner-1.png",
+  "/home/banner-2.png",
+  "/home/banner-3.png",
+  "/home/banner-4.png",
+  "/home/banner-5.png",
+  "/home/banner-6.png",
+];
+
+const HREFS: (string | null)[] = [
+  "/trien-lam/workshop-hoa-gom",
+  "/trien-lam/giao-chi",
+  null,
+  "/trien-lam/dong-chay-cua-lua",
+  "/trien-lam/van-gogh",
+  "/trien-lam/bien-do-tuong-lai",
 ];
 
 const EASE = "cubic-bezier(0.45, 0, 0.15, 1)";
 const TRANSITION = `transform 320ms ${EASE}, opacity 320ms ${EASE}`;
 
 export function Banner() {
+  const router = useRouter();
   const [active, setActive] = useState(2);
   const dragStartX = useRef<number | null>(null);
+  const didDrag = useRef(false);
   const count = IMAGES.length;
 
   const go = (dir: number) => setActive((prev) => (prev + dir + count) % count);
@@ -35,7 +48,10 @@ export function Banner() {
       onPointerUp={(e) => {
         if (dragStartX.current === null) return;
         const dx = e.clientX - dragStartX.current;
-        if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+        if (Math.abs(dx) > 40) {
+          go(dx < 0 ? 1 : -1);
+          didDrag.current = true;
+        }
         dragStartX.current = null;
       }}
       onPointerCancel={() => {
@@ -68,6 +84,14 @@ export function Banner() {
               zIndex: 100 - distance * 10,
               transition: TRANSITION,
               pointerEvents: isActive ? "auto" : "none",
+              cursor: isActive && HREFS[i] ? "pointer" : undefined,
+            }}
+            onClick={() => {
+              if (didDrag.current) {
+                didDrag.current = false;
+                return;
+              }
+              if (isActive && HREFS[i]) router.push(HREFS[i]);
             }}
           >
             <div

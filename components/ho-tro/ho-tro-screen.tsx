@@ -13,8 +13,8 @@ const TABS = [
   { key: "legal", label: "Pháp lý", Icon: InfoIcon },
 ] as const;
 
-const ACTIVE_COLOR = "#b07d00";
-const INACTIVE_COLOR = "#22304a";
+const ACTIVE_COLOR = "#AA6E00";
+const INACTIVE_COLOR = "#19264E";
 
 export function HoTroScreen() {
   const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("settings");
@@ -48,7 +48,7 @@ export function HoTroScreen() {
                   >
                     <span className="flex flex-1 flex-col items-center gap-1.5 rounded bg-white px-2 py-3">
                       <span style={{ color }}>
-                        <Icon className="h-6 w-6" />
+                        <Icon className="h-6 w-6" filled={isActive} />
                       </span>
                       <span className="text-xs font-medium" style={{ color }}>
                         {label}

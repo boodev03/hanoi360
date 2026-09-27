@@ -23,7 +23,7 @@ function renderParts(parts: DetailTextPart[]) {
 
 export function DetailContent({ blocks }: { blocks: DetailBlock[] }) {
   return (
-    <div className="flex flex-col gap-4 px-3 pt-4 pb-8">
+    <div className="flex flex-col gap-4 px-3 pb-8">
       {blocks.map((block, index) => {
         if (block.type === "image") {
           return (

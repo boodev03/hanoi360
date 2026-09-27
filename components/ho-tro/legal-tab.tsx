@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDownIcon } from "../home/icons";
+
+function CaretIcon({ className }: { className?: string }) {
+  return (
+    <svg width="12" height="5" viewBox="0 0 12 5" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      <path d="M0 5L6 0L12 5H0Z" fill="#27314D" />
+    </svg>
+  );
+}
 
 const SECTIONS = [
   {
@@ -28,11 +35,11 @@ export function LegalTab() {
   const [openKey, setOpenKey] = useState<string | null>("intro");
 
   return (
-    <div className="flex flex-col px-4 py-2">
+    <div className="flex flex-col gap-1 py-4">
       {SECTIONS.map((section) => {
         const isOpen = openKey === section.key;
         return (
-          <div key={section.key} className="border-b border-[#ececec] last:border-b-0">
+          <div key={section.key} className="bg-white px-3">
             <button
               type="button"
               onClick={() => setOpenKey((prev) => (prev === section.key ? null : section.key))}
@@ -40,10 +47,10 @@ export function LegalTab() {
             >
               <span className="text-sm font-medium text-[#252525]">{section.title}</span>
               <span
-                className="shrink-0 text-[#58585c] transition-transform"
-                style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                className="shrink-0 transition-transform"
+                style={{ transform: isOpen ? "rotate(0deg)" : "rotate(180deg)" }}
               >
-                <ChevronDownIcon className="h-4 w-4" />
+                <CaretIcon />
               </span>
             </button>
 

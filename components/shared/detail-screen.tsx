@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLayoutEffect, useRef, useState } from "react";
 import { useIsSaved, useToggleSaved } from "@/lib/store/use-saved-store";
-import { BackIcon, BookmarkIcon, PinIconV2 } from "../home/icons";
+import { BackIcon, BookmarkIcon, CalendarIcon, FacebookIcon, InstagramIcon, PinIconV2 } from "../home/icons";
 import { DirectionsButton } from "./directions-button";
 import { DetailContent, type DetailBlock } from "./detail-content";
 import { BottomNav } from "../home/bottom-nav";
@@ -30,12 +30,16 @@ export function DetailScreen({
   hideAddress,
   hideActions,
   squareHero,
+  socials,
+  cta,
 }: {
   item: DetailItem;
   savedKey: string;
   hideAddress?: boolean;
   hideActions?: boolean;
   squareHero?: boolean;
+  socials?: boolean;
+  cta?: { label: string; href: string };
 }) {
   const router = useRouter();
   const saved = useIsSaved(savedKey);
@@ -96,17 +100,49 @@ export function DetailScreen({
             </h1>
 
             {!hideAddress && (
-              <div className="mt-4">
-                <div className="flex items-center gap-1.5">
-                  <PinIconV2 className="h-5 w-5 text-[#19264E]" />
-                  <span className="text-xs leading-none font-semibold text-[#141E3F]">Địa chỉ</span>
+              <div className="mt-4 flex items-start gap-4">
+                {item.hours && (
+                  <div className="w-1/2 shrink-0">
+                    <div className="flex items-center gap-1.5">
+                      <CalendarIcon className="h-5 w-5 text-[#19264E]" />
+                      <span className="text-xs leading-none font-semibold text-[#141E3F]">Mở cửa</span>
+                    </div>
+                    <p className="mt-2 text-sm leading-none text-[#141E3F]">{item.hours}</p>
+                    {item.hoursNote && (
+                      <p className="mt-1.5 text-sm leading-none text-[#141E3F]">{item.hoursNote}</p>
+                    )}
+                  </div>
+                )}
+                <div className={`min-w-0 ${item.hours ? "w-1/2" : ""}`}>
+                  <div className="flex items-center gap-1.5">
+                    <PinIconV2 className="h-5 w-5 shrink-0 text-[#19264E]" />
+                    <span className="text-xs leading-none font-semibold text-[#141E3F]">Địa chỉ</span>
+                  </div>
+                  <p className="mt-2 text-sm leading-snug text-[#141E3F]">{item.address ?? "Hà Nội"}</p>
                 </div>
-                <p className="mt-2 text-sm leading-none text-[#141E3F]">{item.address ?? "Hà Nội"}</p>
+              </div>
+            )}
+
+            {socials && (
+              <div className="mt-3 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() => toggleSaved(savedKey)}
+                  aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
+                  aria-pressed={saved}
+                  className="flex h-10 w-10 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
+                >
+                  <BookmarkIcon className="h-5 w-5" filled={saved} />
+                </button>
+                <div className="flex items-center gap-3 text-[#27314D]">
+                  <InstagramIcon className="h-8 w-8" />
+                  <FacebookIcon className="h-8 w-8" />
+                </div>
               </div>
             )}
           </div>
 
-          {!hideActions && (
+          {!hideActions && !socials && (
             <button
               type="button"
               onClick={() => toggleSaved(savedKey)}
@@ -143,6 +179,19 @@ export function DetailScreen({
                 </div>
               ))}
             </div>
+          </div>
+        )}
+
+        {cta && (
+          <div className="px-3 pb-8">
+            <a
+              href={cta.href}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-12 w-full items-center justify-center rounded-lg bg-[#AA6E00] text-base font-semibold text-white transition-transform duration-150 select-none active:scale-[0.98]"
+            >
+              {cta.label}
+            </a>
           </div>
         )}
       </main>
