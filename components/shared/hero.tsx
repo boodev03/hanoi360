@@ -26,7 +26,7 @@ export function Hero({ title, gradientFrom, gradientTo, illustration }: HeroProp
             priority
           />
         )}
-        <h1 className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[28px] leading-[1.1] font-extrabold whitespace-pre-line text-white uppercase">
+        <h1 className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-[28px] leading-[40px] font-extrabold whitespace-pre-line text-white uppercase">
           {title}
         </h1>
       </div>

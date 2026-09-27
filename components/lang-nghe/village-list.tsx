@@ -7,7 +7,7 @@ export function VillageList({ villages }: { villages: Village[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-1 pb-6">
+    <div className="flex flex-col gap-4 px-4 pb-6">
       {villages.map((village) => (
         <CardItem
           key={village.id}

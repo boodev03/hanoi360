@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckIcon, FilterIcon } from "../home/icons";
+import { CheckIcon, CloseIcon, FilterIcon, TrashIcon } from "../home/icons";
 import type { SavedItemType } from "./saved-items";
 
 export type SortBy = "recent" | "nearest";
@@ -33,6 +33,8 @@ export function SavedToolbar({
   selectMode,
   onToggleSelectMode,
   selectedCount,
+  allSelected,
+  onSelectAll,
   onBulkRemove,
 }: {
   disabled: boolean;
@@ -43,9 +45,50 @@ export function SavedToolbar({
   selectMode: boolean;
   onToggleSelectMode: () => void;
   selectedCount: number;
+  allSelected: boolean;
+  onSelectAll: () => void;
   onBulkRemove: () => void;
 }) {
   const [openMenu, setOpenMenu] = useState<"filter" | "sort" | null>(null);
+
+  if (selectMode) {
+    return (
+      <div className="relative flex items-center gap-2 px-4 pb-3">
+        <button
+          type="button"
+          onClick={() => {
+            setOpenMenu(null);
+            onToggleSelectMode();
+          }}
+          aria-label="Đóng"
+          className="flex h-8 w-8 shrink-0 items-center justify-center text-[#19264e]"
+        >
+          <CloseIcon className="h-[21.79px] w-[21.79px]" />
+        </button>
+
+        <div className="ml-auto flex items-center gap-2.5">
+          <button
+            type="button"
+            onClick={onSelectAll}
+            className="flex h-8 w-[120px] items-center justify-center rounded border border-[#9b9b9b] bg-white px-3 py-1.5 text-xs font-normal text-[#252525]"
+          >
+            {allSelected ? "Bỏ chọn tất cả" : "Chọn tất cả"}
+          </button>
+          <button
+            type="button"
+            onClick={onBulkRemove}
+            disabled={selectedCount === 0}
+            aria-label="Xoá mục đã chọn"
+            className={`flex h-8 w-[120px] items-center justify-center rounded border border-[#9b9b9b] px-3 py-1.5 disabled:opacity-40 ${
+              selectedCount > 0 ? "border-[#aa6e00] bg-[#aa6e00] text-[#f3ebd9]" : "bg-white text-[#9b9b9b]"
+            }`}
+          >
+            <TrashIcon className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex items-center gap-2 px-4 pb-3">
@@ -61,7 +104,7 @@ export function SavedToolbar({
             color: "#252525",
           }}
         >
-          <FilterIcon className="h-3.5 w-3.5" />
+          <FilterIcon className="h-5 w-5 text-[#141E3F]" />
           Lọc theo
         </button>
 
@@ -86,25 +129,17 @@ export function SavedToolbar({
         )}
       </div>
 
-      {selectMode && selectedCount > 0 && (
-        <button
-          type="button"
-          onClick={onBulkRemove}
-          className="flex h-8 items-center rounded-full bg-[#fdecec] px-3 text-xs font-medium text-[#c0392b]"
-        >
-          Bỏ lưu ({selectedCount})
-        </button>
-      )}
-
       <div className="ml-auto flex items-center gap-2">
         <button
           type="button"
           disabled={disabled}
-          onClick={onToggleSelectMode}
+          onClick={() => {
+            setOpenMenu(null);
+            onToggleSelectMode();
+          }}
           className="flex h-7 w-[105px] items-center justify-center rounded border border-[#9b9b9b] text-center text-xs font-normal text-[#252525] disabled:opacity-40"
-          style={selectMode ? { color: "#009b8c", borderColor: "#009b8c" } : undefined}
         >
-          {selectMode ? "Xong" : "Chọn"}
+          Chọn
         </button>
 
         <div className="relative">

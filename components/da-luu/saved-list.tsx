@@ -2,7 +2,7 @@
 
 import { useSavedKeys } from "@/lib/store/use-saved-store";
 import { CardItem } from "../shared/card-item";
-import { CheckIcon, SavedIcon } from "../home/icons";
+import { CheckIconV2, SavedIcon } from "../home/icons";
 import { parseDistanceMeters, resolveSavedItem, type SavedDisplayItem } from "./saved-items";
 import type { FilterType, SortBy } from "./saved-toolbar";
 
@@ -18,7 +18,7 @@ function SavedCard({
   onToggleSelect: () => void;
 }) {
   return (
-    <div className="relative">
+    <div className={`relative ${selectMode ? "rounded-lg border border-[#aa6e00]" : ""}`}>
       <CardItem
         layout="vertical"
         item={{
@@ -41,10 +41,10 @@ function SavedCard({
           className="absolute inset-0 z-20"
         >
           <span
-            className="absolute top-3 left-3 flex h-6 w-6 items-center justify-center rounded-full transition-colors"
-            style={{ backgroundColor: selected ? "#009b8c" : "rgba(255,255,255,0.9)" }}
+            className="absolute top-3 left-3 flex h-5 w-5 items-center justify-center border border-[#9b9b9b] transition-colors"
+            style={{ backgroundColor: selected ? "#aa6e00" : "#ffffff" }}
           >
-            {selected && <CheckIcon className="h-3.5 w-3.5 text-white" />}
+            {selected && <CheckIconV2 className="h-3 w-3 text-[#f2d79f]" />}
           </span>
         </button>
       )}
@@ -88,7 +88,7 @@ export function SavedList({
   }
 
   return (
-    <div className="flex flex-col gap-4 px-4 pt-1 pb-6">
+    <div className="flex flex-col gap-4 px-4 pb-6">
       {items.map((item) => (
         <SavedCard
           key={item.key}

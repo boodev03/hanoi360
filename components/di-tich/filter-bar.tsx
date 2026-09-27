@@ -27,7 +27,7 @@ export function FilterBar() {
 
   return (
     <>
-      <FilterSection>
+      <FilterSection className="pt-2 pb-2">
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
@@ -38,7 +38,7 @@ export function FilterBar() {
             color: sortActive ? "#aa6e00" : "#252525",
           }}
         >
-          <FilterIcon className="h-3.5 w-3.5" />
+          <FilterIcon className="h-5 w-5 text-[#141E3F]" />
           Lọc theo
         </button>
 

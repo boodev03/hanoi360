@@ -5,7 +5,7 @@ import { useState } from "react";
 function CaretIcon({ className }: { className?: string }) {
   return (
     <svg width="12" height="5" viewBox="0 0 12 5" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <path d="M0 5L6 0L12 5H0Z" fill="#27314D" />
+      <path d="M0 5L6 0L12 5H0Z" fill="currentColor" />
     </svg>
   );
 }
@@ -47,8 +47,8 @@ export function LegalTab() {
             >
               <span className="text-sm font-medium text-[#252525]">{section.title}</span>
               <span
-                className="shrink-0 transition-transform"
-                style={{ transform: isOpen ? "rotate(0deg)" : "rotate(180deg)" }}
+                className={`shrink-0 transition-transform ${isOpen ? "text-[#aa6e00]" : "text-[#27314d]"}`}
+                style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
               >
                 <CaretIcon />
               </span>

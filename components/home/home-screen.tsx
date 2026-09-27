@@ -13,8 +13,8 @@ export function HomeScreen() {
       <main
         className="h-full space-y-7 overflow-y-auto pb-6"
         style={{
-          paddingTop: "calc(92px + env(safe-area-inset-top))",
-          paddingBottom: "calc(103px + env(safe-area-inset-bottom))",
+          paddingTop: "calc(64px + env(safe-area-inset-top))",
+          paddingBottom: "calc(83px + env(safe-area-inset-bottom))",
           background: "linear-gradient(rgb(250, 248, 245) 0%, rgb(239, 236, 231) 100%)",
           touchAction: "pan-y",
         }}

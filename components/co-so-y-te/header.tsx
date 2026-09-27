@@ -34,7 +34,7 @@ export function Header({ scrollContainerRef }: { scrollContainerRef: RefObject<H
       >
         <BackIcon className="h-6 w-6" />
       </button>
-      <span className="text-base transition-colors duration-200" style={{ color: fg }}>
+      <span className="text-base leading-6 font-semibold tracking-normal transition-colors duration-200" style={{ color: scrolled ? "#19264E" : "#ffffff" }}>
         Cơ sở y tế
       </span>
     </div>

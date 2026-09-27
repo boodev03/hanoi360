@@ -40,7 +40,7 @@ export function Banner() {
 
   return (
     <div
-      className="relative isolate h-[406px] w-full overflow-hidden"
+      className="relative isolate h-[390px] w-full overflow-hidden"
       style={{ touchAction: "pan-y" }}
       onPointerDown={(e) => {
         dragStartX.current = e.clientX;
@@ -75,7 +75,7 @@ export function Banner() {
             className="absolute"
             style={{
               width: 295,
-              height: 370,
+              height: 354,
               top: 23,
               left: "50%",
               marginLeft: -147.5,

@@ -144,11 +144,11 @@ export function CardItemHorizontal({
         >
           <BookmarkIcon className="h-4 w-4" filled={saved} />
         </button>
-        <p className="mt-3.5 truncate text-base leading-6 font-semibold text-[#27314D]">{item.name}</p>
+        <p className="truncate text-base leading-6 font-semibold text-[#27314D]">{item.name}</p>
 
-        <p className="line-clamp-2 text-sm leading-none text-[#141E3D]">{item.description}</p>
+        <p className="max-w-[90%] text-sm text-[#141E3D]">{item.description}</p>
 
-        <div className="absolute bottom-1 left-3 inline-flex items-center">
+        <div className="mt-auto inline-flex items-center pt-2.5">
           <PinIcon className="size-5 text-[#27314D]" />
           <span className="text-[11px] leading-none text-[#27314D]">{item.distance}</span>
         </div>

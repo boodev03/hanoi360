@@ -10,7 +10,8 @@ export type DetailTextPart = {
 export type DetailBlock =
   | { type: "text"; parts: DetailTextPart[] }
   | { type: "list"; ordered?: boolean; items: DetailTextPart[][] }
-  | { type: "image"; src: string; alt?: string };
+  | { type: "image"; src: string; alt?: string }
+  | { type: "vr"; src: string; title?: string };
 
 function renderParts(parts: DetailTextPart[]) {
   return parts.map((part, index) => {
@@ -35,6 +36,24 @@ export function DetailContent({ blocks }: { blocks: DetailBlock[] }) {
                 className="object-cover"
                 sizes="100vw"
               />
+            </div>
+          );
+        }
+
+        if (block.type === "vr") {
+          return (
+            <div key={index}>
+              <h2 className="text-base font-semibold text-[#252525]">{block.title ?? "Tour VR 360°"}</h2>
+              <div className="mt-3 h-[236px] w-full overflow-hidden rounded-lg bg-[#f3f3f3]">
+                <iframe
+                  src={block.src}
+                  title={block.title ?? "Tour VR 360°"}
+                  className="h-full w-full border-0"
+                  allow="accelerometer; gyroscope; fullscreen; xr-spatial-tracking"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
             </div>
           );
         }

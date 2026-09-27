@@ -27,18 +27,18 @@ export function FilterBar() {
 
   return (
     <>
-      <FilterSection>
+      <FilterSection className="pt-2 pb-2">
         <button
           type="button"
           onClick={() => setSheetOpen(true)}
           className="flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-xs font-medium transition-colors duration-150"
           style={{
             borderColor: sortActive ? "#009b8c" : "#e5e5e4",
-            backgroundColor: sortActive ? "#e6f5f3" : "#ffffff",
+            backgroundColor: "#ffffff",
             color: sortActive ? "#009b8c" : "#252525",
           }}
         >
-          <FilterIcon className="h-3.5 w-3.5" />
+          <FilterIcon className="h-5 w-5 text-[#141E3F]" />
           Lọc theo
         </button>
 
@@ -52,7 +52,7 @@ export function FilterBar() {
               className="flex h-8 shrink-0 items-center gap-1.5 rounded-full border px-3.5 text-xs font-medium transition-colors duration-150"
               style={{
                 borderColor: isActive ? "#009b8c" : "#e5e5e4",
-                backgroundColor: isActive ? "#e6f5f3" : "#ffffff",
+                backgroundColor: "#ffffff",
                 color: isActive ? "#009b8c" : "#252525",
               }}
             >

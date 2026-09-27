@@ -4,7 +4,7 @@ import { HeroSection } from "@/components/shared/hero-section";
 export function Hero({ children }: { children?: ReactNode }) {
   return (
     <HeroSection
-      title={"Khám phá\nBảo tàng"}
+      title={"DẠO BƯỚC\nQUA KÝ ỨC"}
       gradientFrom="#009B8C"
       gradientTo="#004942"
       illustration="/bao-tang/hero-illustration.svg"

@@ -5,8 +5,8 @@ export function Hero({ children }: { children?: ReactNode }) {
   return (
     <HeroSection
       title={"TINH HOA\nLÀNG NGHỀ"}
-      gradientFrom="#f2d79f"
-      gradientTo="#aa6e00"
+      gradientFrom="#DDB86B"
+      gradientTo="#AA6E00"
       illustration="/lang-nghe/hero-illustration.svg"
       searchPlaceholder="Tìm địa điểm bạn muốn đến"
     >

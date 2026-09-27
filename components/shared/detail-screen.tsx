@@ -61,7 +61,10 @@ export function DetailScreen({
     <div className="relative h-dvh w-full overflow-hidden bg-white">
       <main
         className="h-full overflow-y-auto"
-        style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
+        style={{
+          paddingBottom: "calc(83px + env(safe-area-inset-bottom))",
+          background: "linear-gradient(rgb(250, 248, 245) 0%, rgb(239, 236, 231) 100%)",
+        }}
       >
         <div
           className={`relative h-[392px] w-full overflow-hidden bg-[#e5e5e4] ${squareHero ? "" : "rounded-b-[20px]"}`}
@@ -76,7 +79,7 @@ export function DetailScreen({
             type="button"
             onClick={() => router.back()}
             aria-label="Quay lại"
-            className="absolute left-4 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#252525] shadow-md"
+            className="absolute left-4 flex h-10 w-10 items-center justify-center rounded-full text-[#FAF8F5]"
             style={{ top: "calc(12px + env(safe-area-inset-top))" }}
           >
             <BackIcon className="h-5 w-5" />
@@ -123,24 +126,25 @@ export function DetailScreen({
               </div>
             )}
 
-            {socials && (
-              <div className="mt-3 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => toggleSaved(savedKey)}
-                  aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
-                  aria-pressed={saved}
-                  className="flex h-10 w-10 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
-                >
-                  <BookmarkIcon className="h-5 w-5" filled={saved} />
-                </button>
-                <div className="flex items-center gap-3 text-[#27314D]">
-                  <InstagramIcon className="h-8 w-8" />
-                  <FacebookIcon className="h-8 w-8" />
-                </div>
-              </div>
-            )}
           </div>
+
+          {socials && (
+            <div className="mt-3 flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => toggleSaved(savedKey)}
+                aria-label={saved ? "Bỏ lưu địa điểm" : "Lưu địa điểm"}
+                aria-pressed={saved}
+                className="flex h-10 w-10 items-center justify-center text-[#27314D] transition-transform duration-150 select-none active:scale-90"
+              >
+                <BookmarkIcon className="h-5 w-5" filled={saved} />
+              </button>
+              <div className="flex items-center gap-3 text-[#27314D]">
+                <InstagramIcon className="h-8 w-8" />
+                <FacebookIcon className="h-8 w-8" />
+              </div>
+            </div>
+          )}
 
           {!hideActions && !socials && (
             <button

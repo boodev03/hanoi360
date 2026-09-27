@@ -1,6 +1,8 @@
 import type { DetailBlock } from "../shared/detail-content";
 import type { Site } from "./sites";
 
+const VR_TOUR_URL = "https://tour.panoee.net/6ab6316982ffd76ee6cf67f8/dien-kinh-thien";
+
 const SITE_INFO: Record<number, { story: string; highlights: string[]; tip: string }> = {
   1: {
     story: "Hồ Tây là hồ nước ngọt lớn nhất Hà Nội, hình thành từ một khúc cũ của sông Hồng. Quanh hồ là những con đường đẹp, quán cà phê view hồ và nhiều đền chùa cổ kính.",
@@ -107,6 +109,7 @@ export function getSiteContent(site: Site): DetailBlock[] {
       ],
     },
     { type: "image", src: site.photo, alt: site.name },
+    { type: "vr", src: VR_TOUR_URL },
     {
       type: "text",
       parts: [{ text: "Trải nghiệm nổi bật", bold: true }],
