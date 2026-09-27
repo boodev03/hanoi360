@@ -1,9 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { Guide } from "./guides";
 
 function GuideCard({ guide }: { guide: Guide }) {
   return (
-    <div className="relative h-58.75 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-150 active:scale-[0.99]">
+    <Link
+      href={`/cam-nang/${guide.id}`}
+      className="relative block h-58.75 overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-black/5 transition-transform duration-150 active:scale-[0.99]"
+    >
       <div className="w-full h-[calc(100%-32px)] bg-[#c0c0c0] relative">
         <Image
           src={guide.photo}
@@ -19,7 +23,7 @@ function GuideCard({ guide }: { guide: Guide }) {
       <div className="absolute bottom-2 left-2 right-2 flex h-14 items-center justify-center overflow-hidden rounded bg-white/80 px-9 py-1 backdrop-blur-[15px]" style={{ height: '56px' }}>
         <p className="line-clamp-2 text-center text-[16px] leading-snug font-bold text-[#252525]">{guide.title}</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

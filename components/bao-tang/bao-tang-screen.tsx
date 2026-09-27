@@ -34,7 +34,10 @@ export function BaoTangScreen() {
       <main
         ref={scrollRef}
         className="h-full overflow-y-auto"
-        style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
+        style={{
+          paddingBottom: "calc(83px + env(safe-area-inset-bottom))",
+          background: "linear-gradient(rgb(250, 248, 245) 0%, rgb(239, 236, 231) 100%)",
+        }}
       >
         <Hero>
           <FilterBar />

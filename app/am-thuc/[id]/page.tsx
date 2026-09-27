@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { ShopDetailScreen } from "@/components/am-thuc/shop-detail-screen";
 import { getRestaurant } from "@/components/am-thuc/restaurants";
+import { getRestaurantContent } from "@/components/am-thuc/restaurant-content";
 
 export default async function ShopDetailPage(props: PageProps<"/am-thuc/[id]">) {
   const { id } = await props.params;
@@ -8,5 +9,9 @@ export default async function ShopDetailPage(props: PageProps<"/am-thuc/[id]">) 
 
   if (!restaurant) notFound();
 
-  return <ShopDetailScreen restaurant={restaurant} />;
+  return (
+    <ShopDetailScreen
+      restaurant={{ ...restaurant, content: getRestaurantContent(restaurant) }}
+    />
+  );
 }

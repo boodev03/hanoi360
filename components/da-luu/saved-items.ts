@@ -1,8 +1,21 @@
 import { RESTAURANTS } from "@/components/am-thuc/restaurants";
 import { PLACES } from "@/components/home/places";
 import { VENUES } from "@/components/vui-choi/venues";
+import { FACILITIES } from "@/components/co-so-y-te/facilities";
+import { SHOPS } from "@/components/mua-sam/shops";
+import { SITES } from "@/components/di-tich/sites";
+import { MUSEUMS } from "@/components/bao-tang/museums";
+import { VILLAGES } from "@/components/lang-nghe/villages";
 
-export type SavedItemType = "restaurant" | "venue" | "place";
+export type SavedItemType =
+  | "restaurant"
+  | "venue"
+  | "place"
+  | "facility"
+  | "shop"
+  | "site"
+  | "museum"
+  | "village";
 
 export type SavedDisplayItem = {
   key: string;
@@ -42,6 +55,77 @@ export function resolveSavedItem(key: string): SavedDisplayItem | null {
       subtitle: venue.address,
       distance: venue.distance,
       photo: venue.photo,
+      href: `/vui-choi/${venue.id}`,
+    };
+  }
+
+  if (type === "facility") {
+    const facility = FACILITIES.find((item) => item.id === id);
+    if (!facility) return null;
+    return {
+      key,
+      type,
+      name: facility.name,
+      subtitle: facility.address,
+      distance: facility.distance,
+      photo: facility.photo,
+      href: `/co-so-y-te/${facility.id}`,
+    };
+  }
+
+  if (type === "shop") {
+    const shop = SHOPS.find((item) => item.id === id);
+    if (!shop) return null;
+    return {
+      key,
+      type,
+      name: shop.name,
+      subtitle: shop.address,
+      distance: shop.distance,
+      photo: shop.photo,
+      href: `/mua-sam/${shop.id}`,
+    };
+  }
+
+  if (type === "site") {
+    const site = SITES.find((item) => item.id === id);
+    if (!site) return null;
+    return {
+      key,
+      type,
+      name: site.name,
+      subtitle: site.subtitle,
+      distance: site.distance,
+      photo: site.photo,
+      href: `/di-tich/${site.id}`,
+    };
+  }
+
+  if (type === "museum") {
+    const museum = MUSEUMS.find((item) => item.id === id);
+    if (!museum) return null;
+    return {
+      key,
+      type,
+      name: museum.title,
+      subtitle: museum.address,
+      distance: museum.distance,
+      photo: museum.image,
+      href: `/bao-tang/${museum.id}`,
+    };
+  }
+
+  if (type === "village") {
+    const village = VILLAGES.find((item) => item.id === id);
+    if (!village) return null;
+    return {
+      key,
+      type,
+      name: village.name,
+      subtitle: village.address,
+      distance: village.distance,
+      photo: village.photo,
+      href: `/lang-nghe/${village.id}`,
     };
   }
 

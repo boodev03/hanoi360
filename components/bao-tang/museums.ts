@@ -9,6 +9,10 @@ export type Museum = {
   category: MuseumCategory;
 };
 
+export function getMuseum(id: number) {
+  return MUSEUMS.find((museum) => museum.id === id);
+}
+
 export const CATEGORIES: { key: MuseumCategory; label: string; image: string }[] = [
   { key: "culture-art", label: "Văn hoá\nNghệ thuật", image: "/bao-tang/nghe-thuat.png" },
   { key: "history-society", label: "Lịch sử\nXã hội", image: "/bao-tang/lich-su-xa-hoi.png" },

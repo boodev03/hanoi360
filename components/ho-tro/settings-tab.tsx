@@ -50,7 +50,7 @@ export function SettingsTab() {
     <div className="flex flex-col">
       <LocationToggle />
 
-      <div className="mt-2 flex flex-col bg-white">
+      <div className="mt-1 flex flex-col bg-white">
         {LANGUAGES.map((lang) => {
           const isActive = language === lang.key;
           return (

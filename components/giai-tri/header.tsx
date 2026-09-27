@@ -22,8 +22,7 @@ export function Header({ scrollContainerRef }: { scrollContainerRef: RefObject<H
     <div
       className="fixed inset-x-0 top-0 z-40 flex h-14 items-center gap-2 px-3 transition-colors duration-200"
       style={{
-        backgroundColor: scrolled ? "#ffffff" : "transparent",
-        boxShadow: scrolled ? "0 1px 0 rgba(0,0,0,0.06)" : "none",
+        backgroundColor: scrolled ? "#F3F3F3" : "transparent",
       }}
     >
       <button

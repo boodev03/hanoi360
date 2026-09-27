@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { BottomNav } from "../home/bottom-nav";
 import { CategoryFilter } from "./category-filter";
+import { FilterBar } from "./filter-bar";
 import { Header } from "./header";
 import { Hero } from "./hero";
 import { VillageList } from "./village-list";
@@ -33,9 +34,13 @@ export function LangNgheScreen() {
       <main
         ref={scrollRef}
         className="h-full overflow-y-auto"
-        style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
+        style={{
+          paddingBottom: "calc(83px + env(safe-area-inset-bottom))",
+          background: "linear-gradient(rgb(250, 248, 245) 0%, rgb(239, 236, 231) 100%)",
+        }}
       >
         <Hero>
+          <FilterBar />
           <CategoryFilter active={active} onToggle={toggle} />
         </Hero>
         <VillageList villages={villages} />

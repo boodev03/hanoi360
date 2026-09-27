@@ -33,7 +33,7 @@ export function BottomNav() {
             onClick={() => href && router.push(href)}
             className={`flex flex-col items-center gap-1 ${color}`}
           >
-            <Icon className="h-6 w-6" />
+            <Icon className="h-7 w-7" filled={isActive} />
             <span className={`text-[11px] ${isActive ? "font-medium text-[#9e6c1a]" : ""}`}>{label}</span>
           </button>
         );

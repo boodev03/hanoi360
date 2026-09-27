@@ -3,12 +3,14 @@ import type { ReactNode } from "react";
 type FilterSectionProps = {
   /** Tailwind gap-* class between filter items. */
   gapClassName?: string;
+  /** Extra classes merged onto the outer wrapper (e.g. padding overrides). */
+  className?: string;
   children: ReactNode;
 };
 
-export function FilterSection({ gapClassName = "gap-2", children }: FilterSectionProps) {
+export function FilterSection({ gapClassName = "gap-2", className = "pt-2 pb-3", children }: FilterSectionProps) {
   return (
-    <div className="bg-white pt-2 pb-3 shadow-xs">
+    <div className={className}>
       <div className={`flex ${gapClassName} overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}>
         {children}
       </div>

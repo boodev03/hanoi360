@@ -20,7 +20,7 @@ export function HeroSection({ title, gradientFrom, gradientTo, illustration, sea
   useEffect(() => {
     const el = stickyRef.current;
     if (!el) return;
-    const check = () => setStuck(el.getBoundingClientRect().top <= 56);
+    const check = () => setStuck(el.getBoundingClientRect().top <= 96);
     check();
     document.addEventListener("scroll", check, true);
     window.addEventListener("resize", check);
@@ -33,7 +33,7 @@ export function HeroSection({ title, gradientFrom, gradientTo, illustration, sea
   return (
     <>
       <Hero title={title} gradientFrom={gradientFrom} gradientTo={gradientTo} illustration={illustration} />
-      <div ref={stickyRef} className="sticky top-[55px] z-30 -mt-6 bg-white">
+      <div ref={stickyRef} className={`sticky top-14 z-30 transition-colors duration-200 ${stuck ? "bg-[#F3F3F3]" : ""}`}>
         <SearchBar placeholder={searchPlaceholder} stuck={stuck} />
         {children}
       </div>

@@ -5,9 +5,9 @@ export function Hero({ children }: { children?: ReactNode }) {
   return (
     <HeroSection
       title={"MUA SẮM\nTHOẢ THÍCH"}
-      gradientFrom="#f2d79f"
-      gradientTo="#aa6e00"
-      illustration="/mua-sam/hero-illustration.png"
+      gradientFrom="#009B8C"
+      gradientTo="#004942"
+      illustration="/mua-sam/hero-illustration.svg"
       searchPlaceholder="Tìm địa điểm bạn muốn đến"
     >
       {children}

@@ -6,6 +6,10 @@ export type Site = {
   photo: string;
 };
 
+export function getSite(id: number) {
+  return SITES.find((site) => site.id === id);
+}
+
 export const SITES: Site[] = [
   {
     id: 1,

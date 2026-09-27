@@ -1,10 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useSavedKeys, useToggleSaved } from "@/lib/store/use-saved-store";
-import { DirectionsButton } from "../shared/directions-button";
-import { BookmarkIcon, CheckIcon, PinIcon, SavedIcon } from "../home/icons";
+import { useSavedKeys } from "@/lib/store/use-saved-store";
+import { CardItem } from "../shared/card-item";
+import { CheckIcon, SavedIcon } from "../home/icons";
 import { parseDistanceMeters, resolveSavedItem, type SavedDisplayItem } from "./saved-items";
 import type { FilterType, SortBy } from "./saved-toolbar";
 
@@ -19,63 +17,37 @@ function SavedCard({
   selected: boolean;
   onToggleSelect: () => void;
 }) {
-  const toggleSaved = useToggleSaved();
-
   return (
-    <div className="relative rounded-2xl bg-white shadow-sm ring-1 ring-black/5">
-      {!selectMode && item.href && (
-        <Link href={item.href} aria-label={item.name} className="absolute inset-0 z-[1] rounded-2xl" />
-      )}
+    <div className="relative">
+      <CardItem
+        layout="vertical"
+        item={{
+          id: item.key,
+          name: item.name,
+          subtitle: item.subtitle,
+          distance: item.distance,
+          photo: item.photo,
+        }}
+        savedKey={item.key}
+        href={selectMode ? undefined : item.href}
+      />
 
-      <div className="relative">
-        <div className="relative h-[150px] w-full overflow-hidden rounded-t-lg rounded-b-[20px] bg-[#f3f3f3]">
-          {item.photo ? (
-            <Image src={item.photo} alt={item.name} fill className="object-cover" sizes="100vw" />
-          ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-[#d6d6d6] to-[#ae996f]" />
-          )}
-        </div>
-
-        {selectMode ? (
-          <button
-            type="button"
-            onClick={onToggleSelect}
-            aria-label="Chọn địa điểm"
-            className="absolute top-3 left-3 z-10 flex h-6 w-6 items-center justify-center rounded-full transition-colors"
+      {selectMode && (
+        <button
+          type="button"
+          onClick={onToggleSelect}
+          aria-label="Chọn địa điểm"
+          aria-pressed={selected}
+          className="absolute inset-0 z-20"
+        >
+          <span
+            className="absolute top-3 left-3 flex h-6 w-6 items-center justify-center rounded-full transition-colors"
             style={{ backgroundColor: selected ? "#009b8c" : "rgba(255,255,255,0.9)" }}
           >
             {selected && <CheckIcon className="h-3.5 w-3.5 text-white" />}
-          </button>
-        ) : (
-          <DirectionsButton
-            query={`${item.name}, ${item.subtitle}, Hà Nội`}
-            className="absolute right-6 bottom-0 z-10 translate-y-1/2"
-          />
-        )}
-      </div>
-
-      <div className="px-3 pt-3 pb-1">
-        <p className="truncate text-[15px] font-semibold text-[#252525]">{item.name}</p>
-        <p className="mt-0.5 truncate text-[13px] text-[#58585c]">{item.subtitle}</p>
-
-        <div className="mt-2 flex items-center justify-between">
-          <div className="inline-flex items-center gap-1">
-            <PinIcon className="h-3.5 w-3.5 text-[#58585c]" />
-            <span className="text-[11px] text-[#58585c]">{item.distance}</span>
-          </div>
-
-          {!selectMode && (
-            <button
-              type="button"
-              onClick={() => toggleSaved(item.key)}
-              aria-label="Bỏ lưu"
-              className="relative z-10 flex h-8 w-8 items-center justify-center text-[#27314D]"
-            >
-              <BookmarkIcon className="h-4 w-4" filled />
-            </button>
-          )}
-        </div>
-      </div>
+          </span>
+        </button>
+      )}
     </div>
   );
 }

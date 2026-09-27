@@ -9,6 +9,10 @@ export type Venue = {
   photo: string;
 };
 
+export function getVenue(id: number) {
+  return VENUES.find((venue) => venue.id === id);
+}
+
 export const CATEGORIES: { key: VenueCategory; label: string; icon: string }[] = [
   { key: "trekking-tour", label: "Trekking tour", icon: "/vui-choi/cat-trekking-tour.png" },
   { key: "cong-vien", label: "Công viên", icon: "/vui-choi/cat-cong-vien.png" },

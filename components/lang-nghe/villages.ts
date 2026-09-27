@@ -9,6 +9,10 @@ export type Village = {
   photo: string;
 };
 
+export function getVillage(id: number) {
+  return VILLAGES.find((village) => village.id === id);
+}
+
 export const CATEGORIES: { key: VillageCategory; label: string; icon: string }[] = [
   { key: "may-tre-non-mu", label: "Mây tre &\nnón mũ", icon: "/lang-nghe/cat-may-tre-non-mu.png" },
   { key: "luong-thuc-thuc-pham", label: "Lương thực\nthực phẩm", icon: "/lang-nghe/cat-luong-thuc-thuc-pham.png" },

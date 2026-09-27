@@ -5,9 +5,9 @@ export function Hero({ children }: { children?: ReactNode }) {
   return (
     <HeroSection
       title={"Giải trí\nĐa dạng"}
-      gradientFrom="#f2d79f"
-      gradientTo="#aa6e00"
-      illustration="/vui-choi/hero-illustration.svg"
+      gradientFrom="#009B8C"
+      gradientTo="#004942"
+      illustration="/giai-tri/hero-illustration.svg"
       searchPlaceholder="Tìm điểm vui chơi, giải trí..."
     >
       {children}

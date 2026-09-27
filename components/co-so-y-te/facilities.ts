@@ -9,6 +9,10 @@ export type Facility = {
   photo: string;
 };
 
+export function getFacility(id: number) {
+  return FACILITIES.find((facility) => facility.id === id);
+}
+
 export const CATEGORIES: { key: FacilityCategory; label: string; icon: string }[] = [
   { key: "benh-vien", label: "Bệnh viện", icon: "/co-so-y-te/cat-benh-vien.png" },
   { key: "phong-kham", label: "Phòng khám", icon: "/co-so-y-te/cat-phong-kham.png" },

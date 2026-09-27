@@ -9,12 +9,12 @@ type SearchBarProps = {
 
 export function SearchBar({ placeholder, onClick, stuck = false }: SearchBarProps) {
   return (
-    <div className="bg-white px-4 pt-3 pb-0 shadow-xs">
+    <div className={`mx-4 pb-0 transition-transform duration-200 ${stuck ? "" : "-mb-5 -translate-y-1/2"}`}>
       <button
         type="button"
         onClick={onClick}
-        className={`flex h-12 w-full items-center gap-2.5 rounded border border-[#e5e5e4] px-4 transition-[background-color,transform] duration-200 active:scale-[0.98] ${
-          stuck ? "bg-[#E3E2E0]" : "bg-white"
+        className={`flex h-10 w-full items-center gap-2.5 rounded border border-[#e5e5e4] px-4 transition-[background-color,box-shadow] duration-200 ${
+          stuck ? "bg-[#E3E2E0]" : "bg-white shadow-[0px_4px_4px_0px_#00000017]"
         }`}
       >
         <SearchIcon className="h-4 w-4 shrink-0 text-[#58585c]" />

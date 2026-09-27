@@ -127,3 +127,7 @@ export const GUIDES: Guide[] = [
     accentColor: "#00dac5",
   },
 ];
+
+export function getGuide(id: number) {
+  return GUIDES.find((guide) => guide.id === id);
+}

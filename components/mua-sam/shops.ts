@@ -9,6 +9,10 @@ export type Shop = {
   photo: string;
 };
 
+export function getShop(id: number) {
+  return SHOPS.find((shop) => shop.id === id);
+}
+
 export const CATEGORIES: { key: ShopCategory; label: string; icon: string }[] = [
   { key: "trung-tam-thuong-mai", label: "Trung tâm\nthương mại", icon: "/mua-sam/cat-trung-tam-thuong-mai.png" },
   { key: "cho-truyen-thong", label: "Chợ truyền thống", icon: "/mua-sam/cat-cho-truyen-thong.png" },

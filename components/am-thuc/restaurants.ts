@@ -1,3 +1,5 @@
+import type { DetailBlock } from "../shared/detail-content";
+
 export type Dish = {
   photo: string;
   name: string;
@@ -17,6 +19,7 @@ export type Restaurant = {
   address?: string;
   detail?: string;
   dishes?: Dish[];
+  content?: DetailBlock[];
 };
 
 export const RESTAURANTS: Restaurant[] = [

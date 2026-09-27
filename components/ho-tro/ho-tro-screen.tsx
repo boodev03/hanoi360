@@ -61,9 +61,11 @@ export function HoTroScreen() {
           </div>
         </div>
 
-        {tab === "settings" && <SettingsTab />}
-        {tab === "emergency" && <EmergencyTab />}
-        {tab === "legal" && <LegalTab />}
+        <div className="mx-5">
+          {tab === "settings" && <SettingsTab />}
+          {tab === "emergency" && <EmergencyTab />}
+          {tab === "legal" && <LegalTab />}
+        </div>
       </main>
 
       <BottomNav />

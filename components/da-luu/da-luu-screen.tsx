@@ -39,10 +39,13 @@ export function DaLuuScreen() {
     <div className="relative h-dvh w-full overflow-hidden bg-white">
       <main
         className="h-full overflow-y-auto"
-        style={{ paddingBottom: "calc(83px + env(safe-area-inset-bottom))" }}
+        style={{
+          paddingBottom: "calc(83px + env(safe-area-inset-bottom))",
+          background: "linear-gradient(rgb(250, 248, 245) 0%, rgb(239, 236, 231) 100%)",
+        }}
       >
         <div
-          className="sticky top-0 z-20 bg-white"
+          className="sticky top-0 z-20 bg-[#faf8f5]"
           style={{ paddingTop: "calc(16px + env(safe-area-inset-top))" }}
         >
           <h1 className="pb-3 text-center text-lg font-bold text-[#252525]">Đã lưu</h1>
