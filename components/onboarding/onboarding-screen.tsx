@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { ArrowNarrowRightIcon, CheckIcon } from "./icons";
 import { LogoAnimation } from "./logo-animation";
 
@@ -101,6 +101,11 @@ export function OnboardingScreen() {
   }, []);
 
   const isLast = index === SLIDES.length - 1;
+
+  useEffect(() => {
+    const id = setInterval(() => setIndex((prev) => (prev + 1) % SLIDES.length), 5000);
+    return () => clearInterval(id);
+  }, [index]);
 
   const goTo = (next: number) => {
     setIndex(Math.min(Math.max(next, 0), SLIDES.length - 1));

@@ -9,7 +9,6 @@ const IMAGES = [
   "/home/banner-3.png",
   "/home/banner-4.png",
   "/home/banner-5.png",
-  "/home/banner-6.png",
 ];
 
 const HREFS: (string | null)[] = [
@@ -18,7 +17,6 @@ const HREFS: (string | null)[] = [
   null,
   "/trien-lam/dong-chay-cua-lua",
   "/trien-lam/van-gogh",
-  "/trien-lam/bien-do-tuong-lai",
 ];
 
 const EASE = "cubic-bezier(0.45, 0, 0.15, 1)";
