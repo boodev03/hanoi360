@@ -35,7 +35,7 @@ export function CategoryGrid() {
           key={category.label}
           type="button"
           onClick={() => category.href && router.push(category.href)}
-          className="flex flex-col items-center gap-2 active:opacity-70"
+          className="flex flex-col items-center gap-2 transition-transform duration-150 select-none active:scale-90"
         >
           <div className="relative flex h-[72px] w-[72px] items-center justify-center overflow-hidden rounded-lg">
             <Image src={category.icon} alt="" width={72} height={72} className="h-full w-full object-contain" />
