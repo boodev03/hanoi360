@@ -19,7 +19,7 @@ export function BottomNav() {
     <nav
       className="fixed inset-x-0 bottom-0 z-40 flex items-start justify-between rounded-t-2xl bg-white px-6 pt-3"
       style={{
-        paddingBottom: "calc(1.75rem + env(safe-area-inset-bottom))",
+        paddingBottom: "12px",
         boxShadow: "0 -8px 24px rgba(0,0,0,0.08)",
       }}
     >
